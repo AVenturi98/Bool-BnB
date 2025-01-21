@@ -44,6 +44,20 @@ function show(req, res) {
 
 }
 
+//storeProperty
+function storeProperty(req, res) { 
+  const { title, rooms, beds, bathrooms, m2, address, city, building_type, email, img } = req.body
+
+  const sql_post = `
+          INSERT INTO properties ( title, rooms, beds, bathrooms, m2, address, city, building_type, email, img )
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+
+  connection.query(sql_post, [ title, rooms, beds, bathrooms, m2, address, city, building_type, email, img], (err, newProp) => {
+    if (err) return res.status(500).json({ message: 'Database query failed' })
+    res.status(201).json({ message: 'Proprietà aggiunta' })
+  })
+
+}
 //storeReview
 function storeReview(req, res) {
   const { text, name, days, date, vote, property_id } = req.body
@@ -59,4 +73,4 @@ function storeReview(req, res) {
 
 }
 
-module.exports = { index, show, storeReview }
+module.exports = { index, show, storeReview, storeProperty}

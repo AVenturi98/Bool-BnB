@@ -9,7 +9,9 @@ router.get('/', propertiesController.index)
 router.get('/:id', propertiesController.show)
 
 //store
-router.post('/', propertiesController.storeReview)
+router.post('/:id', propertiesController.storeReview)
+
+router.post('/', propertiesController.storeProperty)
 
 
 module.exports = router
