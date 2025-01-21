@@ -7,7 +7,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-package-lock.json
+# Lockfiles 
+package-lock.json 
+**/server/package-lock.json 
+**/client/package-lock.json
+
 node_modules
 dist
 dist-ssr
@@ -23,3 +27,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
