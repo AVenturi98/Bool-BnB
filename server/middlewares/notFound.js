@@ -4,3 +4,4 @@ function notFound(_, res) {
         error: 'Not found'
     })
 }
+module.exports = notFound
