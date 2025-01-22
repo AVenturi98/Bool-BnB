@@ -15,6 +15,12 @@ function index(req, res) {
       // Gestisci l'errore e rispondi con stato 500
       return res.status(500).json({ error: "Errore nel recupero dei dati" });
     }
+
+    // path immagine
+    properties.forEach(property => {
+      property.img = `${process.env.BE_HOST}/properties/${property.img}`
+    })
+
     // Rispondi con i dati delle proprietà in formato JSON
     res.json(properties);
   });
@@ -31,6 +37,9 @@ function show(req, res) {
     if (results.length === 0) return res.status(404).json({ message: 'BnB not found' })
 
     const bnb = results[0]
+
+    // path immagine
+    bnb.img = `${process.env.BE_HOST}/properties/${bnb.img}`
 
     const sql = `SELECT * FROM reviews WHERE property_id = ?`
 
