@@ -8,6 +8,7 @@ function index(req, res) {
     FROM properties
     LEFT JOIN reviews ON properties.id = reviews.property_id
     GROUP BY properties.id
+    ORDER BY properties.hearts DESC
   `;
   // Esegui la query
   connection.query(sql, (err, properties) => {

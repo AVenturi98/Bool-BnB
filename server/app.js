@@ -6,6 +6,7 @@ const propertiesController = require('./routers/propertiesRouter')
 const errorsHandler = require('./middlewares/errorsHandler')
 const notFound = require('./middlewares/notFound')
 const trimString = require('./middlewares/trimString')
+const nodemailer = require('nodemailer')
 
 
 app.use(
@@ -15,6 +16,36 @@ app.use(
 )
 
 app.use(express.json())
+
+// nodemailer mail sender (NON TOCCARE!1!1!)
+const transporter = nodemailer.createTransport({
+  host: 'sandbox.smtp.mailtrap.io',
+  port: 2525,
+  auth: {
+    user: "a55510f8035557",
+    pass: "a8f15d13bfa3c6"
+  }
+});
+
+app.post('/send', (req, res) => {
+  const { firstName, lastName ,email, message } = req.body;
+
+  const mailOptions = {
+    from: `"${firstName}" "${lastName}" <${email}>`,
+    to: 'venditore@example.com',
+    subject: 'Nuovo Messaggio da Cliente',
+    text: message,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Errore nell\'invio della mail.' });
+    }
+    res.status(200).json({ message: 'Email inviata con successo!' });
+  });
+});
+
 app.use(express.static('public'))
 app.use(trimString)
 

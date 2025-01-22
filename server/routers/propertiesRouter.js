@@ -13,5 +13,4 @@ router.post('/:id', propertiesController.storeReview)
 
 router.post('/', propertiesController.storeProperty)
 
-
 module.exports = router
