@@ -14,19 +14,15 @@ app.use(
   })
 )
 
-
-
 app.use(express.json())
 app.use(express.static('public'))
 app.use(trimString)
 
 
-
-
-
 app.get('/', (req, res) => {
   res.send('Server is running')
 })
+
 
 //Rotta 
 app.use('/api/properties/', propertiesController)
@@ -35,7 +31,6 @@ app.use('/api/properties/', propertiesController)
 //Middlewares
 app.use(errorsHandler)
 app.use(notFound)
-
 
 
 app.listen(port, () => {

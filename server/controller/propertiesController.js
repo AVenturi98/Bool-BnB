@@ -73,7 +73,7 @@ function storeProperty(req, res) {
     !email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
     !img || typeof (img) !== 'string'
   ) {
-    return res.status(400).send({ message: 'Data invalid' })
+    return res.status(400).send({ message: 'Titolo, indirizzo, city, building_type, email, img not invalid' })
   }
 
 
