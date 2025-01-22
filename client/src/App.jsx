@@ -4,7 +4,7 @@ function App() {
 
   return (
     <>
-      <div>Bool BnB</div>
+      <div className='bg-lime-300'>Bool BnB</div>
       <MailForm></MailForm>
     </>
   )
