@@ -57,6 +57,26 @@ function show(req, res) {
 function storeProperty(req, res) {
   const { title, rooms, beds, bathrooms, m2, address, city, building_type, email, img } = req.body
 
+
+  if (
+    !rooms || isNaN(rooms) || rooms < 0 ||
+    !beds || isNaN(beds) || beds < 0 ||
+    !bathrooms || isNaN(bathrooms) || bathrooms < 0 ||
+    !m2 || isNaN(m2) || m2 < 0) {
+    return res.status(400).send({ message: 'Rooms,beds,bathrooms e m2 devono essere numeri positivi' })
+  }
+  if (
+    !title || typeof (title) !== 'string' ||
+    !address || typeof (address) !== 'string' ||
+    !city || typeof (city) !== 'string' ||
+    !building_type || typeof (building_type) !== 'string' ||
+    !email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+    !img || typeof (img) !== 'string'
+  ) {
+    return res.status(400).send({ message: 'Titolo, indirizzo, city, building_type, email, img not invalid' })
+  }
+
+
   const sql_post = `
           INSERT INTO properties ( title, rooms, beds, bathrooms, m2, address, city, building_type, email, img )
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
@@ -69,14 +89,32 @@ function storeProperty(req, res) {
 }
 //storeReview
 function storeReview(req, res) {
-  const { text, name, days, date, vote, property_id } = req.body
+  const { text, name, days, vote } = req.body
+
+  const id = req.params.id
+
+  if (
+    !days || isNaN(days) || days < 0 ||
+    !vote || isNaN(vote) || vote < 0
+  ) {
+    return res.status(400).send({ message: 'Days e vote devono essere numeri positivi' })
+  }
+
+
+  if (
+    !text || typeof (text) !== 'string' ||
+    !name || typeof (name) !== 'string'
+    // (!date || !(date instanceof Date))
+  ) {
+    return res.status(400).send({ message: 'Text,name or date invalid' })
+  }
 
   const sql_post = `
-          INSERT INTO reviews (text, name, days, date, vote, property_id)
-          VALUES (?, ?, ?, ?, ?, ?)`
+          INSERT INTO reviews (text, name, days, vote, property_id)
+          VALUES (?, ?, ?, ?, ${id})`
 
-  connection.query(sql_post, [text, name, days, date, vote, property_id], (err, newRev) => {
-    if (err) return res.status(500).json({ message: 'Database query failed' })
+  connection.query(sql_post, [text, name, days, vote, id], (err, newRev) => {
+    if (err) return res.status(500).json({ message: err })
     res.status(201).json({ message: 'Recensione aggiunta' })
   })
 
