@@ -15,6 +15,12 @@ function index(req, res) {
       // Gestisci l'errore e rispondi con stato 500
       return res.status(500).json({ error: "Errore nel recupero dei dati" });
     }
+
+    // path immagine
+    properties.forEach(property => {
+      property.img = `${process.env.BE_HOST}/properties/${property.img}`
+    })
+
     // Rispondi con i dati delle proprietà in formato JSON
     res.json(properties);
   });
@@ -32,6 +38,9 @@ function show(req, res) {
 
     const bnb = results[0]
 
+    // path immagine
+    bnb.img = `${process.env.BE_HOST}/properties/${bnb.img}`
+
     const sql = `SELECT * FROM reviews WHERE property_id = ?`
 
     connection.query(sql, [id], (err, results) => {
@@ -45,14 +54,14 @@ function show(req, res) {
 }
 
 //storeProperty
-function storeProperty(req, res) { 
+function storeProperty(req, res) {
   const { title, rooms, beds, bathrooms, m2, address, city, building_type, email, img } = req.body
 
   const sql_post = `
           INSERT INTO properties ( title, rooms, beds, bathrooms, m2, address, city, building_type, email, img )
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 
-  connection.query(sql_post, [ title, rooms, beds, bathrooms, m2, address, city, building_type, email, img], (err, newProp) => {
+  connection.query(sql_post, [title, rooms, beds, bathrooms, m2, address, city, building_type, email, img], (err, newProp) => {
     if (err) return res.status(500).json({ message: 'Database query failed' })
     res.status(201).json({ message: 'Proprietà aggiunta' })
   })
@@ -73,4 +82,4 @@ function storeReview(req, res) {
 
 }
 
-module.exports = { index, show, storeReview, storeProperty}
+module.exports = { index, show, storeReview, storeProperty }

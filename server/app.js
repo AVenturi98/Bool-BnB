@@ -18,6 +18,7 @@ app.use(
 
 app.use(express.json())
 app.use(express.static('public'))
+app.use(trimString)
 
 
 
@@ -34,7 +35,7 @@ app.use('/api/properties/', propertiesController)
 //Middlewares
 app.use(errorsHandler)
 app.use(notFound)
-// app.use(trimString)
+
 
 
 app.listen(port, () => {
