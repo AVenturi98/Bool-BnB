@@ -1,14 +1,20 @@
-import MailForm from './components/MailForm'
-import Login from './pages/Login'
+import { BrowserRouter, Routes, Route } from 'react-router'
+import DefaultLayout from 'react-router'
 
 function App() {
 
   return (
-    <>
-      <div className='bg-lime-300'>Bool BnB</div>
-      <MailForm></MailForm>
-      <Login />
-    </>
+
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<DefaultLayout />}>
+
+        </Route>
+      </Routes>
+      <Route path='*'>
+        <Route element={<NotFound />} />
+      </Route>
+    </BrowserRouter>
   )
 }
 
