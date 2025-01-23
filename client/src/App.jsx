@@ -8,7 +8,6 @@ import MailForm from './components/MailForm'
 function App() {
 
   return (
-    
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<DefaultLayout />} />
@@ -18,7 +17,6 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-
   )
 }
 
