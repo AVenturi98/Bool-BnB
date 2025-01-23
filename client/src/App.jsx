@@ -1,4 +1,5 @@
 import MailForm from './components/MailForm'
+import Card from './components/Card'
 
 function App() {
 
