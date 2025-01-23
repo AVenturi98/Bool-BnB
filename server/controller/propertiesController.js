@@ -8,6 +8,7 @@ function index(req, res) {
     FROM properties
     LEFT JOIN reviews ON properties.id = reviews.property_id
     GROUP BY properties.id
+    ORDER BY properties.hearts DESC
   `;
   // Esegui la query
   connection.query(sql, (err, properties) => {
@@ -65,6 +66,7 @@ function storeProperty(req, res) {
     !m2 || isNaN(m2) || m2 < 0) {
     return res.status(400).send({ message: 'Rooms,beds,bathrooms e m2 devono essere numeri positivi' })
   }
+
   if (
     !title || typeof (title) !== 'string' ||
     !address || typeof (address) !== 'string' ||
@@ -111,7 +113,7 @@ function storeReview(req, res) {
 
   const sql_post = `
           INSERT INTO reviews (text, name, days, vote, property_id)
-          VALUES (?, ?, ?, ?, ${id})`
+          VALUES (?, ?, ?, ?, ?)`
 
   connection.query(sql_post, [text, name, days, vote, id], (err, newRev) => {
     if (err) return res.status(500).json({ message: err })
