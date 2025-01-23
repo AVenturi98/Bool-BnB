@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router'
-import DefaultLayout from 'react-router'
+import DefaultLayout from './layouts/DefaultLayout'
+import NotFound from './layouts/NotFound'
 
 function App() {
 
@@ -8,12 +9,11 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<DefaultLayout />}>
-
+        </Route>
+        <Route path='*'>
+          <Route element={<NotFound />} />
         </Route>
       </Routes>
-      <Route path='*'>
-        <Route element={<NotFound />} />
-      </Route>
     </BrowserRouter>
   )
 }
