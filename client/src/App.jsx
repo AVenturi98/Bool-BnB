@@ -1,3 +1,4 @@
+import Card from './components/Card'
 import MailForm from './components/MailForm'
 
 function App() {
@@ -6,6 +7,7 @@ function App() {
     <>
       <div className='bg-lime-300'>Bool BnB</div>
       <MailForm></MailForm>
+      <Card />
     </>
   )
 }
