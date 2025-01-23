@@ -10,6 +10,9 @@ function App() {
 
         </Route>
       </Routes>
+      <Route path='*'>
+        <Route element={<NotFound />} />
+      </Route>
     </BrowserRouter>
   )
 }
