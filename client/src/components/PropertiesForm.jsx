@@ -177,6 +177,26 @@ export default function MailForm() {
           />
         </div>
 
+
+        {/* building_type */}
+        <div className="mb-4">
+          <label
+            htmlFor="building_type"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Tipo di costruzione
+          </label>
+          <input
+            type="text"
+            id="building_type"
+            name="building_type"
+            value={formData.title}
+            onChange={handleChange}
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
+
         {/* email */}
         <div className="mb-4">
           <label
