@@ -27,7 +27,8 @@ export default function Show() {
         axios.get(`http://localhost:3000/api/properties/${id}`)
             .then(res => {
                 setProperty(res.data)
-                setOwner(res.data.owner)
+                setOwner(res.data.owner[0])
+
                 setReview(res.data.reviews)
                 console.log(res.data)
             })
@@ -86,7 +87,7 @@ export default function Show() {
             {/* FORM CONTACT */}
             <section>
                 <h1 className="text-2xl font-semibold mt-12">Hai bisogno di più informazioni?</h1>
-                <p className="my-3 text-lg">Mettiti in contattp con {owner.name}, il proprietario di casa</p>
+                <p className="my-3 text-lg">Mettiti in contatto con {owner.name}, il proprietario di casa</p>
                 <div className="text-lg my-3">{owner.name} :
                     <span className="text-lg mx-24 italic "><button type="button" className="cursor-pointer hover:underline decoration-solid hover:text-green-700">{property.email}</button></span> </div>
                 <MailForm />
@@ -96,7 +97,8 @@ export default function Show() {
                 <h1 className="font-bold text-3xl mt-32 mb-6">RENCENSIONI</h1>
                 {review ?
                     review.map(element =>
-                        <div key={element.id} className="flex justify-center items-center border-t-2 border-green-500">
+                        <div key={element.id} className="py-12 flex justify-center items-center border-t-2 border-green-500">
+
                             <div className="relative isolate overflow-hidden bg-white">
                                 <div className="mx-auto max-w-2xl lg:max-w-4xl">
                                     <div className="flex justify-around items-center">
@@ -105,7 +107,8 @@ export default function Show() {
                                         </div>
                                         <img
                                             src={greenLogo}
-                                            className="h-40 w-20"
+                                            className="h-20"
+
                                         />
                                     </div>
                                     <blockquote className="text-center text-xl/8 font-semibold text-gray-900 sm:text-2xl/9">

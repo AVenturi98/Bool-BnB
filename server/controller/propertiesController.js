@@ -50,14 +50,15 @@ function show(req, res) {
       bnb.reviews = results
 
       const sql_owner = `
-        SELECT owners.name AS 'name', owners.email as owner_email
-        FROM properties
-        JOIN owners ON owners.id = properties.owner_id AND properties.id = ?
-        GROUP BY properties.id
-        ORDER BY properties.owner_id  `
+          SELECT owners.name AS 'name', owners.email as owner_email
+          FROM properties
+          JOIN owners ON owners.id = properties.owner_id AND properties.id = ?
+      `
       connection.query(sql_owner, [id], (err, result) => {
         if (err) return res.status(500).json({ message: err.message })
-        bnb.owner = result[0]
+
+        bnb.owner = result
+
         res.json(bnb)
       })
     })
