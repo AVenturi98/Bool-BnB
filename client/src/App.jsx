@@ -1,10 +1,11 @@
 
 import { BrowserRouter, Routes, Route } from 'react-router'
 import DefaultLayout from './layouts/DefaultLayout'
-import NotFound from './layouts/NotFound'
+import BlankLayout from './layouts/BlankLayout'
 import Login from './pages/Login'
 import MailForm from './components/MailForm'
 import PropertiesForm from './components/PropertiesForm'
+import NotFound from './pages/NotFound'
 
 function App() {
 
@@ -15,8 +16,8 @@ function App() {
         <Route path='/mail' element={<MailForm />} />
         <Route path='/properties' element={<PropertiesForm />} />
         <Route path='/login' element={<Login />} />
-        <Route path='*'>
-          <Route element={<NotFound />} />
+        <Route element={<BlankLayout />}>
+          <Route path='*' element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
