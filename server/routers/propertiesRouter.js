@@ -6,6 +6,7 @@ const propertiesController = require('../controller/propertiesController')
 router.get('/', propertiesController.index)
 
 //show
+
 router.get('/:id', propertiesController.show)
 
 //store

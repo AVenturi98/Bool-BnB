@@ -20,7 +20,7 @@ export default function Show() {
     const [property, setProperty] = useState('')
     const [owner, setOwner] = useState('')
     const [review, setReview] = useState([])
-
+   
     const { id } = useParams()
 
     function fetchPost() {
@@ -30,7 +30,7 @@ export default function Show() {
                 setOwner(res.data.owner[0])
 
                 setReview(res.data.reviews)
-                console.log(res.data)
+                console.log(res.data)               
             })
             .catch(err => err.message)
     }
@@ -116,7 +116,7 @@ export default function Show() {
                                     </blockquote>
                                     <div className="flex justify-around items-center my-6">
                                         <VoteStar vote={element.vote} />
-                                        <div className="opacity-35">{element.date}</div>
+                                        <div className="opacity-35">{element.date_it}</div>
                                     </div>
                                 </div>
                             </div>

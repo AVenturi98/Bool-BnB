@@ -42,11 +42,12 @@ function show(req, res) {
     // path immagine
     bnb.img = `${process.env.BE_HOST}/properties/${bnb.img}`
 
-    const sql = `SELECT * FROM reviews WHERE property_id = ?`
+    const sql = `SELECT *, date_format(reviews.date, '%d-%m-%Y') as date_it
+     FROM reviews WHERE property_id = ?`
 
     connection.query(sql, [id], (err, results) => {
       if (err) return res.status(500).json({ message: err.message })
-
+      
       bnb.reviews = results
 
       const sql_owner = `
