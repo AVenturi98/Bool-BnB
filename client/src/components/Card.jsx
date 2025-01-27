@@ -1,10 +1,11 @@
 import Hearts from "./Hearts"
+import placeholder from "../assets/placeholder.png"
 
 export default function Card({ property }) {
   return (
     <div className="border rounded-lg p-4 shadow-md bg-white">
       <img
-        src={property.img}
+        src={property.img || placeholder}
         alt={property.title}
         className="w-full h-48 object-cover rounded-lg mb-4"
       />
