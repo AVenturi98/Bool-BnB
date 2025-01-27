@@ -152,5 +152,36 @@ function login(req, res) {
   });
 };
 
+//Funzione per salvare i cuori
+function storeHearts(req, res) {
+  const id = req.params.id;
+  const { hearts } = req.body;
 
-module.exports = { index, show, storeReview, storeProperty, login }
+  const query = 'UPDATE `bool_bnb_db`.`properties` SET `hearts` = ? WHERE `id` = ?';
+
+  connection.query(query, [hearts, id], (err, results) => {
+    if (err) {
+      console.error('Errore nella query:', err);
+      return res.status(500).json({ message: 'Errore recupero dati dal contatore' });
+    }
+    res.status(200).json({ message: 'Contatore aggiornato con successo!' });
+  });
+}
+
+//Funzione per ricontare i cuori e metterli in ordine
+function getHearts(req, res) {
+  const id = parseInt(req.params.id);
+  const sql = 'SELECT hearts FROM properties WHERE id = ?';
+
+  connection.query(sql, [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Errore nel recupero dei cuori' });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'Proprietà non trovata' });
+    }
+    res.json({ hearts: results[0].hearts });
+  });
+}
+
+module.exports = { index, show, storeReview, storeProperty, login, storeHearts, getHearts }
