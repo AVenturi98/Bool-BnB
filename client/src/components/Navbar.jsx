@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 import logo from "../assets/logo.svg";
+import { Link } from "react-router";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+
+
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -22,11 +27,10 @@ export default function Navbar() {
         <span className="w-6 h-1 bg-green-600 rounded"></span>
       </button>
       <ul
-        className={`absolute top-16 right-0 bg-white flex flex-col items-start gap-2 px-5 py-3 rounded shadow-lg border border-gray-200 transition-transform transform ${
-          menuOpen
-            ? "translate-y-0 opacity-100 pointer-events-auto"
-            : "-translate-y-full opacity-0 pointer-events-none"
-        } md:static md:flex md:flex-row md:gap-5 md:transform-none md:opacity-100 md:pointer-events-auto`}
+        className={`absolute top-16 right-0 bg-white flex flex-col items-start gap-2 px-5 py-3 rounded shadow-lg border border-gray-200 transition-transform transform ${menuOpen
+          ? "translate-y-0 opacity-100 pointer-events-auto"
+          : "-translate-y-full opacity-0 pointer-events-none"
+          } md:static md:flex md:flex-row md:gap-5 md:transform-none md:opacity-100 md:pointer-events-auto`}
         onClick={() => setMenuOpen(false)}
       >
         <li>
@@ -44,11 +48,11 @@ export default function Navbar() {
             Services
           </a>
         </li>
-        <li>
-          <a className="hover:text-green-800 transition-colors duration-200">
-            Contact
-          </a>
-        </li>
+        <Link to="/Login">
+          <li className="hover:text-green-800 transition-colors duration-200">
+            Login <FontAwesomeIcon icon={faUser} />
+          </li>
+        </Link>
       </ul>
     </nav>
   );
