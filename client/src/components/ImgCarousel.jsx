@@ -48,7 +48,7 @@ export default function ImgCarousel() {
                             <div>
                                 <Card className="h-full">
                                     <CardContent className="flex aspect-square items-center justify-center p-0">
-                                        <Link to={`/api/properties/${property.id}`} className="block w-full h-full">
+                                        <Link to={`/${property.id}`} className="block w-full h-full">
                                             <img src={property.img || placeHolder} alt={property.title} className="object-cover w-full h-full rounded-xl overflow-hidden" />
                                         </Link>
                                     </CardContent>
