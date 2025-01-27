@@ -3,6 +3,7 @@ import logo from "../assets/logo.svg";
 import { Link } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faHouse } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -33,11 +34,11 @@ export default function Navbar() {
           } md:static md:flex md:flex-row md:gap-5 md:transform-none md:opacity-100 md:pointer-events-auto`}
         onClick={() => setMenuOpen(false)}
       >
-        <li>
-          <a className="hover:text-green-800 transition-colors duration-200">
-            Home
-          </a>
-        </li>
+        <Link to="/">
+          <li className="hover:text-green-800 transition-colors duration-200">
+            Home <FontAwesomeIcon icon={faHouse} />
+          </li>
+        </Link>
         <li>
           <a className="hover:text-green-800 transition-colors duration-200">
             About
