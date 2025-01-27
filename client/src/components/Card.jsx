@@ -1,11 +1,10 @@
-import Hearts from "./Hearts"
-import placeholder from "../assets/placeholder.png"
+import Hearts from "./Hearts";
 
 export default function Card({ property }) {
   return (
-    <div className="border rounded-lg p-4 shadow-md bg-white">
+    <div className="border rounded-lg p-4 shadow-md bg-white hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out relative">
       <img
-        src={property.img || placeholder}
+        src={property.img}
         alt={property.title}
         className="w-full h-48 object-cover rounded-lg mb-4"
       />
@@ -20,11 +19,9 @@ export default function Card({ property }) {
       <p className="text-sm text-gray-700">Beds: {property.beds}</p>
       <p className="text-sm text-gray-700">Bathrooms: {property.bathrooms}</p>
       <p className="text-sm text-gray-700">Size: {property.m2} m²</p>
-      <p className="text-sm text-gray-700">Hearts: {property.hearts || 0}</p>
-      <Hearts property={property} />
-      <p className="text-sm text-gray-700">
-        Average Vote: {property.avg_vote || "N/A"}
-      </p>
+      <div className="absolute bottom-4 right-4">
+        <Hearts property={property} />
+      </div>
     </div>
   );
 }
