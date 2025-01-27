@@ -20,8 +20,6 @@ router.post('/', propertiesController.storeProperty)
 router.post('/:id/hearts', propertiesController.storeHearts)
 
 //Rotta per riordinare i cuori
-router.get('/:id/hearts', (req, res) => {
-  propertiesController.getHearts(req, res);
-});
+router.get('/:id/hearts', propertiesController.getHearts);
 
 module.exports = router

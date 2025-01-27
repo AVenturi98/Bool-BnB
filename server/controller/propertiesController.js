@@ -47,7 +47,7 @@ function show(req, res) {
 
     connection.query(sql, [id], (err, results) => {
       if (err) return res.status(500).json({ message: err.message })
-      
+
       bnb.reviews = results
 
       const sql_owner = `
@@ -67,41 +67,42 @@ function show(req, res) {
 
 }
 
-//storeProperty
 function storeProperty(req, res) {
-  const { title, rooms, beds, bathrooms, m2, address, city, building_type, email, img } = req.body
-
+  const { title, rooms, beds, bathrooms, m2, address, city, building_type, email, img } = req.body;
 
   if (
     !rooms || isNaN(rooms) || rooms < 0 ||
     !beds || isNaN(beds) || beds < 0 ||
     !bathrooms || isNaN(bathrooms) || bathrooms < 0 ||
-    !m2 || isNaN(m2) || m2 < 0) {
-    return res.status(400).send({ message: 'Rooms,beds,bathrooms e m2 devono essere numeri positivi' })
+    !m2 || isNaN(m2) || m2 < 0
+  ) {
+    return res.status(400).send({ message: 'Rooms, beds, bathrooms e m2 devono essere numeri positivi' });
   }
 
   if (
-    !title || typeof (title) !== 'string' ||
-    !address || typeof (address) !== 'string' ||
-    !city || typeof (city) !== 'string' ||
-    !building_type || typeof (building_type) !== 'string' ||
-    !email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
-    !img || typeof (img) !== 'string'
+    !title || typeof title !== 'string' ||
+    !address || typeof address !== 'string' ||
+    !city || typeof city !== 'string' ||
+    (building_type && typeof building_type !== 'string') ||
+    !email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
   ) {
-    return res.status(400).send({ message: 'Titolo, indirizzo, city, building_type, email, img not invalid' })
+    return res.status(400).send({ message: 'Titolo, indirizzo, city, building_type, email, non validi' });
   }
 
-
   const sql_post = `
-          INSERT INTO properties ( title, rooms, beds, bathrooms, m2, address, city, building_type, email, img )
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    INSERT INTO properties (title, rooms, beds, bathrooms, m2, address, city, building_type, email, img)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
 
   connection.query(sql_post, [title, rooms, beds, bathrooms, m2, address, city, building_type, email, img], (err, newProp) => {
-    if (err) return res.status(500).json({ message: 'Database query failed' })
-    res.status(201).json({ message: 'Proprietà aggiunta' })
-  })
-
+    if (err) {
+      console.error('Database query failed:', err.stack);
+      return res.status(500).json({ message: 'Database query failed' });
+    }
+    res.status(201).json({ message: 'Proprietà aggiunta' });
+  });
 }
+
 //storeReview
 function storeReview(req, res) {
   const { text, name, days, vote } = req.body
