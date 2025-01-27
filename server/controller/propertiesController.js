@@ -122,4 +122,23 @@ function storeReview(req, res) {
 
 }
 
-module.exports = { index, show, storeReview, storeProperty }
+function login(req, res) {
+  const { email, password } = req.body;
+
+  // Query per ottenere l'utente dal database
+  const query = 'SELECT * FROM owners WHERE email = ? AND password = ?';
+  connection.query(query, [email, password], (err, results) => {
+    if (err) {
+      return res.status(500).send('Errore del server');
+    }
+
+    if (results.length === 0) {
+      return res.status(401).send('Email o password non corretti');
+    }
+
+    res.status(200).send({ message: 'Login effettuato con successo' });
+  });
+};
+
+
+module.exports = { index, show, storeReview, storeProperty, login }

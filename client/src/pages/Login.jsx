@@ -1,11 +1,33 @@
 import logo from '../assets/logo.svg'
+import axios from 'axios';
 
 export default function Login() {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault()
 
-  }
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+      // Effettua una richiesta POST al server
+      const response = await axios.post('http://localhost:3000/api/properties/login', { email, password });
+
+      // Se il login è riuscito
+      alert(response.data.message); // Mostra il messaggio di successo
+      // Esempio di redirezione alla dashboard
+      window.location.href = '/properties';
+    } catch (error) {
+      // Se il login fallisce
+      if (error.response && error.response.status === 401) {
+        alert('Email o password non corretti');
+      } else {
+        console.error('Errore durante il login:', error);
+        alert('Errore del server, riprova più tardi.');
+      }
+    }
+  };
+
 
 
   return (
