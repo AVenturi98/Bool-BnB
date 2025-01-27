@@ -1,3 +1,5 @@
+import Hearts from "./Hearts"
+
 export default function Card({ property }) {
   return (
     <div className="border rounded-lg p-4 shadow-md bg-white">
@@ -18,6 +20,7 @@ export default function Card({ property }) {
       <p className="text-sm text-gray-700">Bathrooms: {property.bathrooms}</p>
       <p className="text-sm text-gray-700">Size: {property.m2} m²</p>
       <p className="text-sm text-gray-700">Hearts: {property.hearts || 0}</p>
+      <Hearts property={property} />
       <p className="text-sm text-gray-700">
         Average Vote: {property.avg_vote || "N/A"}
       </p>
