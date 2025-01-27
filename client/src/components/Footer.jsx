@@ -39,10 +39,10 @@ export default function Footer() {
             </li>
             <li>
               <a
-                href="#"
+                href="/login"
                 className="hover:text-green-500 transition-colors duration-300"
               >
-                Contact
+                Login
               </a>
             </li>
           </ul>
