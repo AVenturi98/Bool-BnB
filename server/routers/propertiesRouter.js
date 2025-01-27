@@ -9,6 +9,8 @@ router.get('/', propertiesController.index)
 router.get('/:id', propertiesController.show)
 
 //store
+router.post('/login', propertiesController.login)
+
 router.post('/:id', propertiesController.storeReview)
 
 router.post('/', propertiesController.storeProperty)

@@ -28,6 +28,7 @@ export default function Show() {
             .then(res => {
                 setProperty(res.data)
                 setOwner(res.data.owner[0])
+
                 setReview(res.data.reviews)
                 console.log(res.data)
             })
@@ -97,6 +98,7 @@ export default function Show() {
                 {review ?
                     review.map(element =>
                         <div key={element.id} className="py-12 flex justify-center items-center border-t-2 border-green-500">
+
                             <div className="relative isolate overflow-hidden bg-white">
                                 <div className="mx-auto max-w-2xl lg:max-w-4xl">
                                     <div className="flex justify-around items-center">
@@ -106,6 +108,7 @@ export default function Show() {
                                         <img
                                             src={greenLogo}
                                             className="h-20"
+
                                         />
                                     </div>
                                     <blockquote className="text-center text-xl/8 font-semibold text-gray-900 sm:text-2xl/9">

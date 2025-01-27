@@ -1,18 +1,26 @@
-export default function Card() {
-    return <>
-        <section className="max-w-fit px-2 py-2  flex flex-col">
-            <div>
-               <img className="size-80 rounded" src="https://www.baitainmontagna.com/wp-content/uploads/2019/02/differenza-baita-chalet.jpeg" alt="" />
-            </div>
-            <div>
-                <div className="flex gap-6 justify-between">
-                    <span className="font-bold">Lancashire, Regno Unito</span>
-                    <span>stelline</span>
-                </div>
-                <p>Host: Luigi</p>
-                <p>21-26 maggio</p>
-                <p><span className="font-bold">1000$</span> notte</p>
-            </div>
-        </section>
-    </>
+export default function Card({ property }) {
+  return (
+    <div className="border rounded-lg p-4 shadow-md bg-white">
+      <img
+        src={property.img}
+        alt={property.title}
+        className="w-full h-48 object-cover rounded-lg mb-4"
+      />
+      <h2 className="text-xl font-bold text-green-600 mb-2">
+        {property.title}
+      </h2>
+      <p className="text-sm text-gray-700">
+        {property.address}, {property.city}
+      </p>
+      <p className="text-sm text-gray-700">Type: {property.building_type}</p>
+      <p className="text-sm text-gray-700">Rooms: {property.rooms}</p>
+      <p className="text-sm text-gray-700">Beds: {property.beds}</p>
+      <p className="text-sm text-gray-700">Bathrooms: {property.bathrooms}</p>
+      <p className="text-sm text-gray-700">Size: {property.m2} m²</p>
+      <p className="text-sm text-gray-700">Hearts: {property.hearts || 0}</p>
+      <p className="text-sm text-gray-700">
+        Average Vote: {property.avg_vote || "N/A"}
+      </p>
+    </div>
+  );
 }

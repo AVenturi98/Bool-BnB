@@ -46,6 +46,7 @@ app.post('/send', (req, res) => {
   });
 });
 
+
 app.use(express.static('public'))
 app.use(trimString)
 
