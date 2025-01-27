@@ -9,6 +9,7 @@ import Show from './pages/Show'
 
 
 import NotFound from './pages/NotFound'
+import PropertiesList from './components/PropertiesList'
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<DefaultLayout />}>
+          <Route path='/' element={<PropertiesList />} />
           <Route path='/:id' element={<Show />} />
           <Route path='/mail' element={<MailForm />} />
           <Route path='/properties' element={<PropertiesForm />} />
