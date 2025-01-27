@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Card from "./Card";
+import Hero from "./Hero.jsx";
 
 export default function PropertiesList() {
   const [properties, setProperties] = useState([]);
@@ -23,13 +24,18 @@ export default function PropertiesList() {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-green-700 mb-4">Properties</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {properties.map((property) => (
-          <Card key={property.id} property={property} />
-        ))}
+    <>
+      <div>
+        <Hero />
       </div>
-    </div>
+      <div className="container mx-auto p-4">
+        <h1 className="text-2xl font-bold text-green-700 mb-4">Properties</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {properties.map((property) => (
+            <Card key={property.id} property={property} />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }

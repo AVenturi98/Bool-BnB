@@ -10,8 +10,7 @@ export default function Footer() {
         <div className="flex-1 min-w-[250px]">
           <h2 className="text-green-800 mb-2 font-bold">Bool BnB</h2>
           <p className="leading-relaxed text-gray-700">
-            slkzhjdkfbk;sd;bfd k,sjbdf,nsbdf,bsnd,dfbn,mdsfd.
-          </p>
+            Bool Bnb: la piattaforma ideale per trovare il soggiorno dei tuoi sogni. Esperienze uniche e comfort garantito, ovunque tu voglia andare.          </p>
         </div>
 
         {/* Quick Links */}
