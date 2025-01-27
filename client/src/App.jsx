@@ -16,10 +16,10 @@ function App() {
       <Routes>
         <Route path='/' element={<DefaultLayout />}>
           <Route path='/:id' element={<Show />} />
+          <Route path='/mail' element={<MailForm />} />
+          <Route path='/properties' element={<PropertiesForm />} />
+          <Route path='/login' element={<Login />} />
         </Route>
-        <Route path='/mail' element={<MailForm />} />
-        <Route path='/properties' element={<PropertiesForm />} />
-        <Route path='/login' element={<Login />} />
         <Route element={<BlankLayout />}>
           <Route path='*' element={<NotFound />} />
         </Route>
