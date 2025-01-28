@@ -34,7 +34,10 @@ function index(req, res) {
 function show(req, res) {
   const id = parseInt(req.params.id)
 
-  const sql = `SELECT * FROM properties WHERE id = ?`
+  const sql = `
+          SELECT properties.*, FLOOR(AVG(reviews.vote)) as avg_vote
+          FROM properties
+          JOIN reviews ON reviews.property_id = properties.id AND properties.id = ?`
 
   connection.query(sql, [id], (err, results) => {
     if (err) return res.status(500).json({ message: err.message })
@@ -43,9 +46,7 @@ function show(req, res) {
     const bnb = results[0]
 
     // path immagine
-    if (bnb.img && !bnb.img.startsWith('http')) {
-      bnb.img = `${process.env.BE_HOST}/properties/${bnb.img}`;
-    }
+    bnb.img = `${process.env.BE_HOST}/properties/${bnb.img}`
 
     const sql = `SELECT *, date_format(reviews.date, '%d-%m-%Y') as date_it
      FROM reviews WHERE property_id = ?`
@@ -69,7 +70,6 @@ function show(req, res) {
       })
     })
   })
-
 }
 
 function storeProperty(req, res) {

@@ -4,7 +4,7 @@ import { faFacebook, faTwitter, faInstagram, faLinkedin } from "@fortawesome/fre
 
 export default function Footer() {
   return (
-    <footer className="bg-white text-green-600 p-5 font-sans">
+    <footer className="bg-white text-green-600 p-5 font-sans border-t-4 border-grey-400 mt-8 py-12">
       <div className="max-w-7xl mx-auto flex flex-wrap justify-between gap-5">
         {/* Descrizione */}
         <div className="flex-1 min-w-[250px]">
