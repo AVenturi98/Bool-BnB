@@ -1,4 +1,4 @@
-const connection = require('../data/db')
+const connection = require('../data/db.js')
 const jwt = require("jsonwebtoken");
 
 // Funzione che gestisce la richiesta per ottenere le proprietà e il voto medio
@@ -37,7 +37,10 @@ function show(req, res) {
   const sql = `
           SELECT properties.*, FLOOR(AVG(reviews.vote)) as avg_vote
           FROM properties
-          LEFT JOIN reviews ON reviews.property_id = properties.id AND properties.id = ?`
+          LEFT JOIN reviews ON reviews.property_id = properties.id
+          WHERE properties.id = ?
+          GROUP BY properties.id
+  `
 
   connection.query(sql, [id], (err, results) => {
     if (err) return res.status(500).json({ message: err.message })
