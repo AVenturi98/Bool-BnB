@@ -35,18 +35,18 @@ function show(req, res) {
   const id = parseInt(req.params.id)
 
   const sql = `
-          SELECT properties.*, FLOOR(AVG(reviews.vote)) as avg_vote
+          SELECT *
           FROM properties
-          LEFT JOIN reviews ON reviews.property_id = properties.id
           WHERE properties.id = ?
-          GROUP BY properties.id
-  `
+          `
+
 
   connection.query(sql, [id], (err, results) => {
     if (err) return res.status(500).json({ message: err.message })
     if (results.length === 0) return res.status(404).json({ message: 'BnB not found' })
 
     const bnb = results[0]
+
 
     // path immagine
     bnb.img = `${process.env.BE_HOST}/properties/${bnb.img}`
@@ -58,6 +58,15 @@ function show(req, res) {
       if (err) return res.status(500).json({ message: err.message })
 
       bnb.reviews = results
+
+      const sql_avg = `SELECT FLOOR(AVG(vote)) as avg_vote FROM reviews WHERE property_id = ?`
+
+      connection.query(sql_avg, [id], (err, results) => {
+        if (err) return res.status(500).json({ message: err.message })
+
+        bnb.avg_vote = results[0].avg_vote
+      })
+
 
       const sql_owner = `
           SELECT owners.name AS 'name', owners.email as owner_email
