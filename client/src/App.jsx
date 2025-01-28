@@ -21,9 +21,9 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path='/' element={<DefaultLayout />}>
+          <Route element={<DefaultLayout />}>
             <Route path='/' element={<PropertiesList />} />
-            <Route path='/:id' element={<Show />} />
+            <Route path='/properties/:id' element={<Show />} />
             <Route path='/mail' element={<MailForm />} />
             <Route path='/properties' element={<PropertiesForm />} />
             <Route path='/login' element={<Login setAuthenticated={setAuthenticated} />} />
