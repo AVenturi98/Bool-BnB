@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import logo from "../assets/logo.svg";
 import { Link } from "react-router";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+
 
 
 

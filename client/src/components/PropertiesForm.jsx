@@ -12,6 +12,7 @@ const initialFormData = {
   building_type: "",
   email: "",
   img: "",
+  description: "",
 };
 
 export default function PropertiesForm() {
@@ -32,19 +33,59 @@ export default function PropertiesForm() {
 
     const token = localStorage.getItem("token");
 
-    // Validazione dei numeri
+    // Validazione
     if (
       isNaN(formData.beds) ||
       isNaN(formData.rooms) ||
       isNaN(formData.bathrooms) ||
       isNaN(formData.m2)
     ) {
-      alert("I letti, stanze, bagni o i m2 devono essere numeri");
+      setError("I letti, stanze, bagni o i m2 devono essere numeri");
+      return;
+    }
+
+    if (!formData.title || !formData.rooms || !formData.beds || !formData.bathrooms || !formData.m2 || !formData.address || !formData.city || !formData.email) {
+      setError("Tutti i campi obbligatori devono essere compilati");
+      return;
+    }
+
+    if (formData.title.length > 100) {
+      setError("Il nome dell'appartamento non può superare i 100 caratteri");
+      return;
+    }
+
+    if (formData.address.length > 60 || formData.city.length > 60) {
+      setError("L'indirizzo e la città non possono superare i 60 caratteri");
+      return;
+    }
+
+    if (formData.building_type.length > 50) {
+      setError("Il tipo di costruzione non può superare i 50 caratteri");
+      return;
+    }
+
+    if (formData.email.length > 100) {
+      setError("L'indirizzo email non è valido");
+      return;
+    }
+
+    if (formData.img.length > 255) {
+      setError("L'url dell'immagine non può superare i 255 caratteri");
+      return;
+    }
+
+    if (formData.rooms < 1 || formData.beds < 1 || formData.bathrooms < 1 || formData.m2 < 10) {
+      setError("I letti, stanze, bagni e m2 devono essere maggiori di 0");
+      return;
+    }
+
+    if (formData.title.trim() === "" || formData.address.trim() === "" || formData.city.trim() === "" || formData.email.trim() === "" || formData.description.trim() === "") {
+      setError("I campi non possono essere vuoti");
       return;
     }
 
     // Invia i dati
-    axios.post("http://localhost:3000/api/properties/", {...formData, token})
+    axios.post("http://localhost:3000/api/properties/", { ...formData, token })
       .then(response => {
         console.log("Dati inviati correttamente:", response.data);
         alert("Dati inviati correttamente!");
@@ -62,7 +103,7 @@ export default function PropertiesForm() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 py-6 my-6">
       <form
         className="w-full max-w-4xl bg-white p-8 shadow-md rounded-lg grid grid-cols-1 md:grid-cols-2 gap-6"
         onSubmit={handleSubmit}
@@ -82,6 +123,7 @@ export default function PropertiesForm() {
             name="title"
             value={formData.title}
             onChange={handleChange}
+            maxLength={255}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             required
           />
@@ -92,6 +134,7 @@ export default function PropertiesForm() {
             Numero di stanze*
           </label>
           <input
+            type="number"
             id="rooms"
             name="rooms"
             value={formData.rooms}
@@ -106,6 +149,7 @@ export default function PropertiesForm() {
             Numero di letti*
           </label>
           <input
+            type="number"
             id="beds"
             name="beds"
             value={formData.beds}
@@ -120,6 +164,7 @@ export default function PropertiesForm() {
             Numero di bagni*
           </label>
           <input
+            type="number"
             id="bathrooms"
             name="bathrooms"
             value={formData.bathrooms}
@@ -134,6 +179,7 @@ export default function PropertiesForm() {
             Grandezza (m²)*
           </label>
           <input
+            type="number"
             id="m2"
             name="m2"
             value={formData.m2}
@@ -156,6 +202,7 @@ export default function PropertiesForm() {
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             required
+            maxLength={60}
           />
         </div>
 
@@ -171,6 +218,7 @@ export default function PropertiesForm() {
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             required
+            maxLength={60}
           />
         </div>
 
@@ -184,6 +232,7 @@ export default function PropertiesForm() {
             name="building_type"
             value={formData.building_type}
             onChange={handleChange}
+            maxLength={50}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
@@ -200,6 +249,7 @@ export default function PropertiesForm() {
             onChange={handleChange}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             required
+            maxLength={255}
           />
         </div>
 
@@ -213,11 +263,26 @@ export default function PropertiesForm() {
             name="img"
             value={formData.img}
             onChange={handleChange}
+            maxLength={255}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
-
-        <p className="text-sm text-red-500 col-span-2">{error}</p>
+        <div className="mb-4 col-span-2">
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+            Descrizione*
+          </label>
+          <textarea
+            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            name="description"
+            rows={4}
+            id="description"
+            value={formData.description}
+            onChange={handleChange}
+            maxLength={600}
+          >
+          </textarea>
+        </div>
+        <p className="text-sm text-red-600 col-span-2">{error}</p>
         <p className="text-sm col-span-2">* I campi devono essere obbligatori</p>
         <button
           type="submit"

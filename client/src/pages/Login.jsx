@@ -1,6 +1,7 @@
 import logo from '../assets/logo.svg'
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router';
 
 export default function Login({ setAuthenticated }) {
   useAuth(); // Utilizza il contesto dell'autenticazione
@@ -37,11 +38,13 @@ export default function Login({ setAuthenticated }) {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            alt="Bool BnB"
-            src={logo} // Aggiungi logo qui
-            className="mx-auto h-40 w-auto"
-          />
+          <Link to='/'>
+            <img
+              alt="Bool BnB"
+              src={logo} // Aggiungi logo qui
+              className="mx-auto h-40 w-auto"
+            />
+          </Link>
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
             Sign in to your account
           </h2>

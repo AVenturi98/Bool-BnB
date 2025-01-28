@@ -12,6 +12,7 @@ export default function FormReview({ id, onSubmit = () => { }, callabck = () => 
     }
 
     const [review, setReview] = useState(initReview)
+    const [error, setError] = useState(null)
 
     function handleChange(e) {
         const { name, value } = e.target
@@ -23,6 +24,32 @@ export default function FormReview({ id, onSubmit = () => { }, callabck = () => 
 
     function addRew(e) {
         e.preventDefault()
+
+        // Validazione
+        if (isNaN(review.vote) || isNaN(review.days)) {
+            setError('Il voto e i giorni devono essere numeri')
+            return
+        }
+
+        if (review.vote < 1 || review.vote > 5) {
+            setError('Il voto deve essere compreso tra 1 e 5')
+            return
+        }
+
+        if (review.days < 1) {
+            setError('I giorni devono essere maggiori di 0')
+            return
+        }
+
+        if (review.text.trim() === '' || review.text.length > 255) {
+            setError('Il testo della recensione non può essere vuoto o superare i 255 caratteri')
+            return
+        }
+
+        if (review.name.trim() === '' || review.name.length > 100) {
+            setError('Il nome non può essere vuoto o superare i 100 caratteri')
+            return
+        }
 
         axios.post(`http://localhost:3000/api/properties/${id}`, review)
             .then((res) => {
@@ -40,7 +67,6 @@ export default function FormReview({ id, onSubmit = () => { }, callabck = () => 
     return (
         <>
             <form onSubmit={addRew}>
-
                 <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="sm:col-span-3">
                         <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
@@ -93,8 +119,6 @@ export default function FormReview({ id, onSubmit = () => { }, callabck = () => 
                             />
                         </div>
                     </div>
-
-
                     <div className="sm:col-span-4">
                         <label htmlFor="text" className="block text-sm/6 font-medium text-gray-900">
                             Messaggio
@@ -108,12 +132,13 @@ export default function FormReview({ id, onSubmit = () => { }, callabck = () => 
                                 required
                                 maxLength={255}
                                 className="block w-full rounded-md bg-slate-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6"
-
                             />
                         </div>
                     </div>
                 </div>
-                <button type="submit" className="my-6 rounded-md bg-green px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-green-300 cursor-pointer bg-green-400 hover:bg-green-500 transition hover:-translate-y-1 hover:scale-101 delay-100">Aggiungi</button>
+                <div className='flex justify-between items-center'>
+                    <button type="submit" className="my-6 rounded-md bg-green px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-green-300 cursor-pointer bg-green-400 hover:bg-green-500 transition hover:-translate-y-1 hover:scale-101 delay-100">Aggiungi</button>
+                    <span className='text-red-600'>{error}</span>                </div>
             </form>
         </>
     )
