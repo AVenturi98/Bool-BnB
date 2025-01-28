@@ -1,6 +1,7 @@
 import Hearts from "./Hearts"
 import placeholder from "../assets/placeholder.png"
 import { Link } from "react-router";
+import VoteStar from "./VoteStar";
 
 export default function Card({ property }) {
   return (
@@ -15,20 +16,21 @@ export default function Card({ property }) {
           <h2 className="text-xl font-bold text-green-600 mb-2">
             {property.title}
           </h2>
-          <p className="text-sm text-gray-700">
+          <p className="text-sm text-gray-700 font-semibold">
             {property.address}, {property.city}
           </p>
-          <p className="text-sm text-gray-700">Type: {property.building_type}</p>
-          <p className="text-sm text-gray-700">Rooms: {property.rooms}</p>
-          <p className="text-sm text-gray-700">Beds: {property.beds}</p>
-          <p className="text-sm text-gray-700">Bathrooms: {property.bathrooms}</p>
-          <p className="text-sm text-gray-700">Size: {property.m2} m²</p>
+          <p className="text-sm text-gray-700 mt-2">
+            Tipo: {property.building_type}
+          </p>
+          <p className="text-sm text-gray-700">Posti letto: {property.beds}</p>
+          <div className="flex items-center gap-1 pt-5">
+            <VoteStar vote={Math.round(property.avg_vote || 0)} />
+          </div>
         </Link>
         <div className="absolute bottom-4 right-4">
           <Hearts property={property} />
         </div>
       </div>
-
     </>
   );
 }
