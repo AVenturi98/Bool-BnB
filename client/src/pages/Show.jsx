@@ -44,12 +44,15 @@ export default function Show() {
             .then(res => {
                 setProperty(res.data)
                 setOwner(res.data.owner[0])
-                setReview(res.data.reviews)
+                if (res.data.reviews.length !== 0){
+                    setReview(res.data.reviews)
+                }
                 setHearts(res.data.hearts)
                 console.log(res.data)
             })
             .catch(err => err.message)
     }
+    
 
     useEffect(() => {
         fetchPost()
@@ -69,7 +72,7 @@ export default function Show() {
                         <h4 className="text-2xl font-semibold">{property.building_type} a {property.city}, {property.address}</h4>
                     </div>
                     <div className="flex justify-between items-center gap-3 text-2xl">
-                        {property && property.hearts !== undefined && (
+                        {property && property.hearts !== null && (
                             <CounterButton property={property} />
                         )}
                     </div>
@@ -110,7 +113,7 @@ export default function Show() {
             {/*  REVIEWS */}
             <section>
                 <div className="flex justify-between items-center">
-                    <h1 className="font-bold text-3xl mt-32 mb-6">RENCENSIONI <span className="italic font-normal opacity-45">({review.length})</span> </h1>
+                    <h1 className="font-bold text-3xl mt-32 mb-6">RECENSIONI <span className="italic font-normal opacity-45">({review.length})</span> </h1>
                     <div className="mt-32 mb-6 text-xl">
                         <span className="italic opacity-60">in media votato:</span>
                         <FontAwesomeIcon
@@ -125,7 +128,7 @@ export default function Show() {
                 <button type="button" id="openForm" onClick={toggleForm} className="mb-6 hover:text-indigo-500 hover:underline active:text-green-500 ">Aggiungi una recensione</button>
                 {openForm &&
                     <FormReview id={id} callback={closeForm} onSubmit={fetchPost} />}
-                {review ?
+                {review.length !== 0 ?
                     review.map(element =>
                         <div key={element.id} className="py-12 sm:py-0 px-32 sm:px-0 flex justify-center items-center border-t-2 border-green-500">
 
