@@ -14,7 +14,7 @@ const initialFormData = {
   img: "",
 };
 
-export default function MailForm() {
+export default function PropertiesForm() {
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
 
@@ -30,6 +30,8 @@ export default function MailForm() {
   function handleSubmit(e) {
     e.preventDefault();
 
+    const token = localStorage.getItem("token");
+
     // Validazione dei numeri
     if (
       isNaN(formData.beds) ||
@@ -42,7 +44,7 @@ export default function MailForm() {
     }
 
     // Invia i dati
-    axios.post("http://localhost:3000/api/properties/", formData)
+    axios.post("http://localhost:3000/api/properties/", {...formData, token})
       .then(response => {
         console.log("Dati inviati correttamente:", response.data);
         alert("Dati inviati correttamente!");

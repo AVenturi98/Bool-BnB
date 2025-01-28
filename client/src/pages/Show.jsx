@@ -91,7 +91,7 @@ export default function Show() {
                 <h1 className="text-2xl font-semibold mt-12">Hai bisogno di più informazioni?</h1>
                 <p className="my-3 text-lg">Mettiti in contatto con {owner.name}, il proprietario di casa</p>
                 <div className="text-lg my-3">{owner.name} :
-                    <span className="text-lg mx-24 italic "><button type="button" className="cursor-pointer hover:underline decoration-solid hover:text-green-700">{property.email}</button></span> </div>
+                    <span className="text-lg mx-24 italic "><button type="button" className="cursor-pointer hover:underline decoration-solid hover:text-green-700">{owner.owner_email}</button></span> </div>
                 <MailForm />
             </section>
             {/*  REVIEWS */}

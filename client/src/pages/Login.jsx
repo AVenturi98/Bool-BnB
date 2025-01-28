@@ -1,7 +1,9 @@
 import logo from '../assets/logo.svg'
 import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext';
 
-export default function Login() {
+export default function Login({ setAuthenticated }) {
+  useAuth(); // Utilizza il contesto dell'autenticazione
 
   const handleOnSubmit = async (e) => {
     e.preventDefault()
@@ -12,9 +14,10 @@ export default function Login() {
     try {
       // Effettua una richiesta POST al server
       const response = await axios.post('http://localhost:3000/api/properties/login', { email, password });
-
+      localStorage.setItem("token", response.data.token); // Salva il token
+      setAuthenticated(true); // Aggiorna lo stato globale
       // Se il login è riuscito
-      alert(response.data.message); // Mostra il messaggio di successo
+      alert("Benvenuto!"); // Mostra il messaggio di successo
       // Esempio di redirezione alla dashboard
       window.location.href = '/properties';
     } catch (error) {
