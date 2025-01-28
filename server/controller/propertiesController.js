@@ -171,7 +171,7 @@ function login(req, res) {
     const owner = results[0]
 
     // Genera il token JWT
-    const token = jwt.sign({ id: owner.id, email: owner.email }, SECRET_KEY, { expiresIn: "1h" });
+    const token = jwt.sign({ id: owner.id, email: owner.email }, SECRET_KEY, { expiresIn: "5h" });
 
     res.status(200).json({ token });
   });

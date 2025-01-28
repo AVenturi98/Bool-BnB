@@ -7,26 +7,35 @@ import MailForm from './components/MailForm'
 import PropertiesForm from './components/PropertiesForm'
 import Show from './pages/Show'
 import { AuthProvider } from './contexts/AuthContext'
-
-
 import NotFound from './pages/NotFound'
 import PropertiesList from './components/PropertiesList'
 
 
 function App() {
 
-  const setAuthenticated = () => { }
+  const setAuthenticated = () => {
+    if (localStorage.getItem("token") !== null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  const authenticated = setAuthenticated();
+  console.log(authenticated);
+  console.log(localStorage.getItem("token"));
+  
+  
 
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path='/' element={<DefaultLayout />}>
+          <Route path='/' element={<DefaultLayout authenticated={authenticated} setAuthenticated={setAuthenticated} />}>
             <Route path='/' element={<PropertiesList />} />
             <Route path='/:id' element={<Show />} />
             <Route path='/mail' element={<MailForm />} />
             <Route path='/properties' element={<PropertiesForm />} />
-            <Route path='/login' element={<Login setAuthenticated={setAuthenticated} />} />
+            <Route path='/login' element={<Login authenticated={authenticated} setAuthenticated={setAuthenticated} />} />
           </Route>
           <Route element={<BlankLayout />}>
             <Route path='*' element={<NotFound />} />
