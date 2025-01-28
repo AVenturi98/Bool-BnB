@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-export default function FormReview({ id }) {
+export default function FormReview({ id, onSubmit }) {
 
     const initReview = {
         property_id: id,
@@ -31,6 +31,7 @@ export default function FormReview({ id }) {
         axios.post(`http://localhost:3000/api/properties/${id}`, review)
             .then((res) => {
                 setReview(initReview)
+                onSubmit()
             })
             .catch((err) => {
                 console.error(err)
