@@ -59,6 +59,9 @@ export default function Show() {
         document.getElementById("openForm").style.display = "block";
     };
 
+    console.log('Property Image:', property.img);
+
+
     return (
         <>
             <div className="container mt-5">
@@ -69,7 +72,7 @@ export default function Show() {
                 {/* HERO */}
                 <section>
                     <HeroShow
-                        img={property.img || defaultImg}
+                        img={property.img && property.img.trim() !== '' && !property.img.endsWith('/') ? property.img : defaultImg}
                         room={property.rooms}
                         bed={property.beds}
                         bath={property.bathrooms}

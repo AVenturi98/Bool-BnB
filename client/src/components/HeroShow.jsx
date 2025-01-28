@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRestroom, faSink, faBed, } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons"
+import placeholder from "../assets/placeholder.png"
 
 export default function Example({ img, room, bed, bath, heart, title, description }) {
 
