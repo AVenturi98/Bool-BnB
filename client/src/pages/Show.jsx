@@ -38,7 +38,7 @@ export default function Show() {
 
     useEffect(() => {
         fetchPost()
-    }, [id, review])
+    }, [id])
 
     return (
         <div className="p-6 my-12 lg:px-60 border-b-4 border-grey-500">
