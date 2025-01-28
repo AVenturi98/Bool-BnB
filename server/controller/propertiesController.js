@@ -20,8 +20,10 @@ function index(req, res) {
 
     // path immagine
     properties.forEach(property => {
-      property.img = `${process.env.BE_HOST}/properties/${property.img}`
-    })
+      if (property.img && !property.img.startsWith('http')) {
+        property.img = `${process.env.BE_HOST}/properties/${property.img}`;
+      }
+    });
 
     // Rispondi con i dati delle proprietà in formato JSON
     res.json(properties);
@@ -41,7 +43,9 @@ function show(req, res) {
     const bnb = results[0]
 
     // path immagine
-    bnb.img = `${process.env.BE_HOST}/properties/${bnb.img}`
+    if (bnb.img && !bnb.img.startsWith('http')) {
+      bnb.img = `${process.env.BE_HOST}/properties/${bnb.img}`;
+    }
 
     const sql = `SELECT *, date_format(reviews.date, '%d-%m-%Y') as date_it
      FROM reviews WHERE property_id = ?`
@@ -93,12 +97,16 @@ function storeProperty(req, res) {
       return res.status(400).send({ message: 'Titolo, indirizzo, city, building_type, email, non validi' });
     }
 
+    const finalImg = img && !img.startsWith('http')
+      ? `${process.env.BE_HOST}/properties/${img}`
+      : img;
+
     const sql_post = `
       INSERT INTO properties (title, rooms, beds, bathrooms, m2, address, city, building_type, email, img, owner_id)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
-    connection.query(sql_post, [title, rooms, beds, bathrooms, m2, address, city, building_type, email, img, ownerID], (err, newProp) => {
+    connection.query(sql_post, [title, rooms, beds, bathrooms, m2, address, city, building_type, email, finalImg, ownerID], (err, newProp) => {
       if (err) {
         console.error('Database query failed:', err.stack);
         return res.status(500).json({ message: 'Database query failed' });
