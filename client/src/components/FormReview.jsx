@@ -1,21 +1,19 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-export default function FormReview({ id, onSubmit }) {
+export default function FormReview({ id, onSubmit = () => { }, callabck = () => { } }) {
 
     const initReview = {
         property_id: id,
         name: '',
         vote: '',
         text: '',
-        days: '',
-        date: ''
+        days: ''
     }
 
     const [review, setReview] = useState(initReview)
 
     function handleChange(e) {
-
         const { name, value } = e.target
         setReview({
             ...review,
@@ -26,12 +24,12 @@ export default function FormReview({ id, onSubmit }) {
     function addRew(e) {
         e.preventDefault()
 
-        console.log('Sending review:', review)
-
         axios.post(`http://localhost:3000/api/properties/${id}`, review)
             .then((res) => {
                 setReview(initReview)
                 onSubmit()
+                callabck()
+                alert('Recensione aggiunta')
             })
             .catch((err) => {
                 console.error(err)
@@ -56,6 +54,7 @@ export default function FormReview({ id, onSubmit }) {
                                 value={review.name}
                                 onChange={handleChange}
                                 required
+                                maxLength={100}
                                 className="block w-full rounded-md bg-slate-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6"
                             />
                         </div>
@@ -72,6 +71,8 @@ export default function FormReview({ id, onSubmit }) {
                                 name="days"
                                 onChange={handleChange}
                                 required
+                                min={1}
+                                max={365}
                                 className="block w-full rounded-md bg-slate-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6"
                             />
                         </div>
@@ -88,6 +89,8 @@ export default function FormReview({ id, onSubmit }) {
                                 name="vote"
                                 onChange={handleChange}
                                 required
+                                min={1}
+                                max={5}
                                 className="block w-full rounded-md bg-slate-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6"
                             />
                         </div>
@@ -112,9 +115,7 @@ export default function FormReview({ id, onSubmit }) {
                         </div>
                     </div>
                 </div>
-                <div className='flex justify-around flex-col'>
-                    <button type="submit" className="mt-6 w-3xs rounded-md bg-green px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-green-300 cursor-pointer bg-green-400 hover:bg-green-500 transition hover:-translate-y-1 hover:scale-101 delay-100">Aggiungi</button>
-                </div>
+                <button type="submit" className="my-6 rounded-md bg-green px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-green-300 cursor-pointer bg-green-400 hover:bg-green-500 transition hover:-translate-y-1 hover:scale-101 delay-100">Aggiungi</button>
             </form>
         </>
     )

@@ -40,12 +40,14 @@ export default function Navbar({ authenticated, setAuthenticated}) {
 
 
   return (
-    <nav className="bg-white text-green-600 container flex justify-between items-center px-5 py-3 border-b border-gray-200 shadow-sm relative">
-      <figure>
-        <img src={logo} className="w-auto h-20" alt="Logo" />
-      </figure>
+    <nav className="bg-white text-green-600 container flex justify-between items-center px-5 py-3 border-b border-gray-200 shadow-sm relative z-10">
+      <Link to='/' className="hover:scale-110 transition-transform duration-300 ease-in-out">
+        <figure>
+          <img src={logo} className="w-auto h-20" alt="Logo" />
+        </figure>
+      </Link>
       <button
-        className="flex flex-col gap-1 cursor-pointer md:hidden"
+        className="flex flex-col gap-1 cursor-pointer md:hidden "
         onClick={toggleMenu}
       >
         <span className="w-6 h-1 bg-green-600 rounded"></span>
