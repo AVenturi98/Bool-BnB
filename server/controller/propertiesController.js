@@ -1,4 +1,4 @@
-const connection = require('../data/db')
+const connection = require('../data/db.js')
 const jwt = require("jsonwebtoken");
 
 // Funzione che gestisce la richiesta per ottenere le proprietà e il voto medio
@@ -85,7 +85,7 @@ function show(req, res) {
 }
 
 function storeProperty(req, res) {
-  const { title, rooms, beds, bathrooms, m2, address, city, building_type, email, img, token } = req.body;
+  const { title, rooms, beds, bathrooms, m2, address, city, building_type, email, img, token, description } = req.body;
   try {
     const decoded = jwt.verify(token, SECRET_KEY); // Decodifica il token
     const ownerID = decoded.id; // Estrai l'ID del proprietario dal token
@@ -103,10 +103,11 @@ function storeProperty(req, res) {
       !title || typeof title !== 'string' ||
       !address || typeof address !== 'string' ||
       !city || typeof city !== 'string' ||
-      (building_type && typeof building_type !== 'string') ||
+      !building_type || typeof building_type !== 'string' ||
+      !description || typeof description !== 'string' ||
       !email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
     ) {
-      return res.status(400).send({ message: 'Titolo, indirizzo, city, building_type, email, non validi' });
+      return res.status(400).send({ message: 'Titolo, indirizzo, city, building_type, email, descrizione non validi' });
     }
 
     const finalImg = img && !img.startsWith('http')
@@ -114,11 +115,11 @@ function storeProperty(req, res) {
       : img;
 
     const sql_post = `
-      INSERT INTO properties (title, rooms, beds, bathrooms, m2, address, city, building_type, email, img, owner_id)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO properties (title, rooms, beds, bathrooms, m2, address, city, building_type, email, img, owner_id, description)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
-    connection.query(sql_post, [title, rooms, beds, bathrooms, m2, address, city, building_type, email, finalImg, ownerID], (err, newProp) => {
+    connection.query(sql_post, [title, rooms, beds, bathrooms, m2, address, city, building_type, email, finalImg, ownerID, description], (err, newProp) => {
       if (err) {
         console.error('Database query failed:', err.stack);
         return res.status(500).json({ message: 'Database query failed' });
@@ -139,9 +140,9 @@ function storeReview(req, res) {
 
   if (
     !days || isNaN(days) || days < 0 ||
-    !vote || isNaN(vote) || vote < 0
+    !vote || isNaN(vote) || vote < 0 || vote > 5
   ) {
-    return res.status(400).send({ message: 'Days e vote devono essere numeri positivi' })
+    return res.status(400).send({ message: 'Days deve essere un numero positivo e vote deve essere compreso tra 0 e 5' })
   }
 
 

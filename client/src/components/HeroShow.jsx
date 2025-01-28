@@ -3,17 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRestroom, faSink, faBed, } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons"
 
-const text = `Lo Chalet Alpino, situato in Via delle Alpi 15 a Cortina, è una splendida proprietà che unisce eleganza e comfort in un contesto montano unico. Con una superficie di 200 m², la casa si sviluppa su due piani, offrendo ampi spazi per il relax e la convivialità. Composta da 6 stanze, tra cui 4 comodi letti e 3 bagni, è l'ideale per ospitare famiglie o gruppi di amici in cerca di una fuga nella natura senza rinunciare al lusso.
-L'interior design è pensato per creare un'atmosfera calda e accogliente, con elementi tipici dello stile alpino e finiture moderne. Le grandi finestre permettono di godere della vista panoramica sulle montagne circostanti, mentre i dettagli in legno e pietra conferiscono un tocco rustico e sofisticato.
-La posizione invidiabile di questo chalet lo rende un punto di partenza perfetto per esplorare le meraviglie delle Dolomiti, sia d'inverno, per praticare sci e sport sulla neve, che d'estate, per escursioni e passeggiate nella natura. Chalet Alpino è il luogo ideale per vivere una vera e propria esperienza montana, all'insegna del relax e della bellezza.
-`
-
-
-const textLimited = text.split(' ')
-
-export default function Example({ img, room, bed, bath, heart, title }) {
-
-
+export default function Example({ img, room, bed, bath, heart, title, description }) {
 
     useEffect(() => {
         const anim = document.getElementById('anim');
@@ -70,11 +60,11 @@ export default function Example({ img, room, bed, bath, heart, title }) {
                     className="aspect-1097/845 w-[68.5625rem] bg-linear-to-tr from-[#ff4694] to-[#776fff] opacity-20"
                 />
             </div>
-            <div id="anim" className="m-6 max-w-7xl px-6 py-3 lg:px-8 backdrop-blur-md rounded-md">
+            <div id="anim" className="m-6 max-w-7xl px-6 py-3 lg:px-8 backdrop-blur-md rounded-md bg-black bg-opacity-30">
                 <div className="mx-auto max-w-2xl lg:mx-0">
                     <h2 className="text-5xl font-semibold tracking-tight sm:text-7xl text-green-600/100">{title}</h2>
                     <p className="mt-8 text-lg font-medium text-pretty text-gray-300 sm:text-xl/8">
-                        {textLimited.slice(0, 30).join(' ') + '...'}
+                        {description && description.slice(0, 150) + '...'}
                     </p>
                 </div>
                 <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
