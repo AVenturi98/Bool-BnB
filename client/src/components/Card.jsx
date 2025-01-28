@@ -1,4 +1,5 @@
-import Hearts from "./Hearts";
+import Hearts from "./Hearts"
+import placeholder from "../assets/placeholder.png"
 import { Link } from "react-router";
 
 export default function Card({ property }) {
@@ -7,7 +8,7 @@ export default function Card({ property }) {
       <div className="border rounded-lg p-4 shadow-md bg-white hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out relative">
         <Link to={`/${property.id}`}>
           <img
-            src={property.img}
+            src={property.img || placeholder}
             alt={property.title}
             className="w-full h-48 object-cover rounded-lg mb-4"
           />
