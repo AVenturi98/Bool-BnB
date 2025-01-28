@@ -38,7 +38,7 @@ export default function Show() {
 
     useEffect(() => {
         fetchPost()
-    }, [id])
+    }, [id, review.length])
 
     return (
         <div className="p-6 my-12 lg:px-60 border-b-4 border-grey-500">
@@ -101,7 +101,7 @@ export default function Show() {
                         <div key={element.id} className="py-12 flex justify-center items-center border-t-2 border-green-500">
 
                             <div className="relative isolate overflow-hidden bg-white">
-                                <div className="mx-auto max-w-2xl lg:max-w-4xl">
+                                <div className="mx-auto max-w-2xl min-w-[500px] lg:max-w-4xl">
                                     <div className="flex justify-around items-center">
                                         <div className="mt-8 flex items-center justify-center space-x-3 text-base">
                                             <div className="font-semibold text-gray-900 text-xl">{element.name}</div>
