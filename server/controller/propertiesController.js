@@ -1,4 +1,5 @@
 const connection = require('../data/db')
+const jwt = require("jsonwebtoken");
 
 // Funzione che gestisce la richiesta per ottenere le proprietà e il voto medio
 function index(req, res) {
@@ -68,39 +69,46 @@ function show(req, res) {
 }
 
 function storeProperty(req, res) {
-  const { title, rooms, beds, bathrooms, m2, address, city, building_type, email, img } = req.body;
+  const { title, rooms, beds, bathrooms, m2, address, city, building_type, email, img, token } = req.body;
+  try {
+    const decoded = jwt.verify(token, SECRET_KEY); // Decodifica il token
+    const ownerID = decoded.id; // Estrai l'ID del proprietario dal token
 
-  if (
-    !rooms || isNaN(rooms) || rooms < 0 ||
-    !beds || isNaN(beds) || beds < 0 ||
-    !bathrooms || isNaN(bathrooms) || bathrooms < 0 ||
-    !m2 || isNaN(m2) || m2 < 0
-  ) {
-    return res.status(400).send({ message: 'Rooms, beds, bathrooms e m2 devono essere numeri positivi' });
-  }
-
-  if (
-    !title || typeof title !== 'string' ||
-    !address || typeof address !== 'string' ||
-    !city || typeof city !== 'string' ||
-    (building_type && typeof building_type !== 'string') ||
-    !email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-  ) {
-    return res.status(400).send({ message: 'Titolo, indirizzo, city, building_type, email, non validi' });
-  }
-
-  const sql_post = `
-    INSERT INTO properties (title, rooms, beds, bathrooms, m2, address, city, building_type, email, img)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `;
-
-  connection.query(sql_post, [title, rooms, beds, bathrooms, m2, address, city, building_type, email, img], (err, newProp) => {
-    if (err) {
-      console.error('Database query failed:', err.stack);
-      return res.status(500).json({ message: 'Database query failed' });
+    if (
+      !rooms || isNaN(rooms) || rooms < 0 ||
+      !beds || isNaN(beds) || beds < 0 ||
+      !bathrooms || isNaN(bathrooms) || bathrooms < 0 ||
+      !m2 || isNaN(m2) || m2 < 0
+    ) {
+      return res.status(400).send({ message: 'Rooms, beds, bathrooms e m2 devono essere numeri positivi' });
     }
-    res.status(201).json({ message: 'Proprietà aggiunta' });
-  });
+
+    if (
+      !title || typeof title !== 'string' ||
+      !address || typeof address !== 'string' ||
+      !city || typeof city !== 'string' ||
+      (building_type && typeof building_type !== 'string') ||
+      !email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    ) {
+      return res.status(400).send({ message: 'Titolo, indirizzo, city, building_type, email, non validi' });
+    }
+
+    const sql_post = `
+      INSERT INTO properties (title, rooms, beds, bathrooms, m2, address, city, building_type, email, img, owner_id)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `;
+
+    connection.query(sql_post, [title, rooms, beds, bathrooms, m2, address, city, building_type, email, img, ownerID], (err, newProp) => {
+      if (err) {
+        console.error('Database query failed:', err.stack);
+        return res.status(500).json({ message: 'Database query failed' });
+      }
+      res.status(201).json({ message: 'Proprietà aggiunta' });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ message: "Token non valido o scaduto" });
+  }
 }
 
 //storeReview
@@ -136,6 +144,8 @@ function storeReview(req, res) {
 
 }
 
+const SECRET_KEY = "10"; // Usa una chiave sicura in produzione
+
 function login(req, res) {
   const { email, password } = req.body;
 
@@ -150,7 +160,12 @@ function login(req, res) {
       return res.status(401).send('Email o password non corretti');
     }
 
-    res.status(200).send({ message: 'Login effettuato con successo' });
+    const owner = results[0]
+
+    // Genera il token JWT
+    const token = jwt.sign({ id: owner.id, email: owner.email }, SECRET_KEY, { expiresIn: "1h" });
+
+    res.status(200).json({ token });
   });
 };
 
