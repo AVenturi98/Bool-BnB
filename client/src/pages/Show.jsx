@@ -122,7 +122,7 @@ export default function Show() {
                 </div>
                 <button type="button" id="openForm" onClick={toggleForm} className="mb-6 hover:text-indigo-500 hover:underline active:text-green-500 ">Aggiungi una recensione</button>
                 {openForm &&
-                    <FormReview id={id} callback={closeForm} reFetch={fetchPost} />}
+                    <FormReview id={id} callback={closeForm} onSubmit={fetchPost} />}
                 {review ?
                     review.map(element =>
                         <div key={element.id} className="py-12 sm:py-0 px-32 sm:px-0 flex justify-center items-center border-t-2 border-green-500">
