@@ -13,13 +13,6 @@ import FormReview from '../components/FormReview'
 import CounterButton from "@/components/Hearts"
 import GoHomeButton from "@/components/GoHomeButton"
 
-
-
-const text = `Lo Chalet Alpino, situato in Via delle Alpi 15 a Cortina, è una splendida proprietà che unisce eleganza e comfort in un contesto montano unico. Con una superficie di 200 m², la casa si sviluppa su due piani, offrendo ampi spazi per il relax e la convivialità. Composta da 6 stanze, tra cui 4 comodi letti e 3 bagni, è l'ideale per ospitare famiglie o gruppi di amici in cerca di una fuga nella natura senza rinunciare al lusso.
-L'interior design è pensato per creare un'atmosfera calda e accogliente, con elementi tipici dello stile alpino e finiture moderne. Le grandi finestre permettono di godere della vista panoramica sulle montagne circostanti, mentre i dettagli in legno e pietra conferiscono un tocco rustico e sofisticato.
-La posizione invidiabile di questo chalet lo rende un punto di partenza perfetto per esplorare le meraviglie delle Dolomiti, sia d'inverno, per praticare sci e sport sulla neve, che d'estate, per escursioni e passeggiate nella natura. Chalet Alpino è il luogo ideale per vivere una vera e propria esperienza montana, all'insegna del relax e della bellezza.
-`
-
 export default function Show() {
 
     const [property, setProperty] = useState('')
@@ -66,7 +59,7 @@ export default function Show() {
             <div className="p-6 mt-8 lg:px-60">
                 {/*  HERO  */}
                 <section>
-                    <HeroShow img={property.img ? property.img : defaultImg} room={property.rooms} bed={property.beds} bath={property.bathrooms} heart={property.hearts} title={property.title} />
+                    <HeroShow img={property.img ? property.img : defaultImg} room={property.rooms} bed={property.beds} bath={property.bathrooms} heart={property.hearts} title={property.title} description={property.description} />
                 </section>
                 {/* DESCRIPTION */}
                 <section className="mt-6">
@@ -82,7 +75,7 @@ export default function Show() {
                         </div>
                     </div>
                     <div className="m-6 text-lg">
-                        {text}
+                        {property.description}
                     </div>
                 </section>
                 {/*  BADGE */}
