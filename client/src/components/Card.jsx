@@ -4,6 +4,7 @@ import { Link } from "react-router";
 import VoteStar from "./VoteStar";
 
 export default function Card({ property }) {
+
   return (
     <>
       <div className="border rounded-lg p-4 shadow-md bg-white hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out relative">

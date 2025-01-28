@@ -97,7 +97,8 @@ export default function FormReview({ id, onSubmit = () => { }, callabck = () => 
                                 name="days"
                                 onChange={handleChange}
                                 required
-                                maxLength={365}
+                                min={1}
+                                max={365}
                                 className="block w-full rounded-md bg-slate-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6"
                             />
                         </div>
@@ -114,7 +115,8 @@ export default function FormReview({ id, onSubmit = () => { }, callabck = () => 
                                 name="vote"
                                 onChange={handleChange}
                                 required
-                                maxLength={5}
+                                min={1}
+                                max={5}
                                 className="block w-full rounded-md bg-slate-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6"
                             />
                         </div>
