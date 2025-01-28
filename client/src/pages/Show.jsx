@@ -10,6 +10,7 @@ import HeroShow from '../components/HeroShow'
 import MailForm from '../components/MailForm'
 import VoteStar from '../components/VoteStar'
 import FormReview from '../components/FormReview'
+import CounterButton from "@/components/Hearts"
 
 const text = `Lo Chalet Alpino, situato in Via delle Alpi 15 a Cortina, è una splendida proprietà che unisce eleganza e comfort in un contesto montano unico. Con una superficie di 200 m², la casa si sviluppa su due piani, offrendo ampi spazi per il relax e la convivialità. Composta da 6 stanze, tra cui 4 comodi letti e 3 bagni, è l'ideale per ospitare famiglie o gruppi di amici in cerca di una fuga nella natura senza rinunciare al lusso.
 L'interior design è pensato per creare un'atmosfera calda e accogliente, con elementi tipici dello stile alpino e finiture moderne. Le grandi finestre permettono di godere della vista panoramica sulle montagne circostanti, mentre i dettagli in legno e pietra conferiscono un tocco rustico e sofisticato.
@@ -21,6 +22,8 @@ export default function Show() {
     const [property, setProperty] = useState('')
     const [owner, setOwner] = useState('')
     const [review, setReview] = useState([])
+    const [hearts, setHearts] = useState(0)
+
 
     //toggle form
     const [openForm, setOpenForm] = useState(false)
@@ -41,8 +44,8 @@ export default function Show() {
             .then(res => {
                 setProperty(res.data)
                 setOwner(res.data.owner[0])
-
                 setReview(res.data.reviews)
+                setHearts(res.data.hearts)
                 console.log(res.data)
             })
             .catch(err => err.message)
@@ -66,10 +69,9 @@ export default function Show() {
                         <h4 className="text-2xl font-semibold">{property.building_type} a {property.city}, {property.address}</h4>
                     </div>
                     <div className="flex justify-between items-center gap-3 text-2xl">
-                        <div>{property.hearts}</div>
-                        <button type="button">
-                            <FontAwesomeIcon icon={faHeart} />
-                        </button>
+                        {property && property.hearts !== undefined && (
+                            <CounterButton property={property} />
+                        )}
                     </div>
                 </div>
                 <div className="m-6 text-lg">
