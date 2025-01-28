@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 
-export default function MailReview({ id }) {
+export default function FormReview({ id }) {
 
     const initReview = {
         property_id: id,
@@ -13,7 +14,7 @@ export default function MailReview({ id }) {
 
     const [review, setReview] = useState(initReview)
 
-    function handle(e) {
+    function handleChange(e) {
 
         const { name, value } = e.target
         setReview({
@@ -27,14 +28,13 @@ export default function MailReview({ id }) {
 
         console.log('Sending review:', review)
 
-        axios.post(`http://localhost:3500/api/properties/${id}/reviews`, review)
+        axios.post(`http://localhost:3000/api/properties/${id}`, review)
             .then((res) => {
                 setReview(initReview)
             })
             .catch((err) => {
                 console.error(err)
             })
-
     }
 
 
@@ -51,8 +51,9 @@ export default function MailReview({ id }) {
                             <input
                                 type="text"
                                 placeholder="Nome"
+                                name="name"
                                 value={review.name}
-                                onChange={handle}
+                                onChange={handleChange}
                                 required
                                 className="block w-full rounded-md bg-slate-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6"
                             />
@@ -67,7 +68,8 @@ export default function MailReview({ id }) {
                             <input type="number"
                                 placeholder="Giorni"
                                 value={review.days}
-                                onChange={handle}
+                                name="days"
+                                onChange={handleChange}
                                 required
                                 className="block w-full rounded-md bg-slate-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6"
                             />
@@ -82,7 +84,8 @@ export default function MailReview({ id }) {
                             <input type="number"
                                 placeholder="Voto"
                                 value={review.vote}
-                                onChange={handle}
+                                name="vote"
+                                onChange={handleChange}
                                 required
                                 className="block w-full rounded-md bg-slate-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6"
                             />
@@ -98,7 +101,8 @@ export default function MailReview({ id }) {
                             <input
                                 placeholder="Messaggio"
                                 value={review.text}
-                                onChange={handle}
+                                name="text"
+                                onChange={handleChange}
                                 required
                                 className="block w-full rounded-md bg-slate-100 px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-green-600 sm:text-sm/6"
 

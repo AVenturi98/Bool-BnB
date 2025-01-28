@@ -9,6 +9,7 @@ import HeroShow from '../components/HeroShow'
 import MailForm from '../components/MailForm'
 import VoteStar from '../components/VoteStar'
 import defaultImg from '../assets/placeholder.png'
+import FormReview from "@/components/FormReview"
 
 const text = `Lo Chalet Alpino, situato in Via delle Alpi 15 a Cortina, è una splendida proprietà che unisce eleganza e comfort in un contesto montano unico. Con una superficie di 200 m², la casa si sviluppa su due piani, offrendo ampi spazi per il relax e la convivialità. Composta da 6 stanze, tra cui 4 comodi letti e 3 bagni, è l'ideale per ospitare famiglie o gruppi di amici in cerca di una fuga nella natura senza rinunciare al lusso.
 L'interior design è pensato per creare un'atmosfera calda e accogliente, con elementi tipici dello stile alpino e finiture moderne. Le grandi finestre permettono di godere della vista panoramica sulle montagne circostanti, mentre i dettagli in legno e pietra conferiscono un tocco rustico e sofisticato.
@@ -20,7 +21,7 @@ export default function Show() {
     const [property, setProperty] = useState('')
     const [owner, setOwner] = useState('')
     const [review, setReview] = useState([])
-   
+
     const { id } = useParams()
 
     function fetchPost() {
@@ -30,14 +31,14 @@ export default function Show() {
                 setOwner(res.data.owner[0])
 
                 setReview(res.data.reviews)
-                console.log(res.data)               
+                console.log(res.data)
             })
             .catch(err => err.message)
     }
 
     useEffect(() => {
         fetchPost()
-    }, [id])
+    }, [id, review])
 
     return (
         <div className="p-6 my-12 lg:px-60 border-b-4 border-grey-500">
@@ -124,6 +125,7 @@ export default function Show() {
                     ) :
                     <div className="flex justify-center">Nessuna recensione</div>}
             </section>
+            <FormReview id={id} />
         </div>
     )
 }
