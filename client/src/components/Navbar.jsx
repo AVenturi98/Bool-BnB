@@ -9,9 +9,12 @@ import { useAuth } from "@/contexts/AuthContext";
 
 
 
-export default function Navbar({ authenticated, setAuthenticated, ownerName }) {
+export default function Navbar({ authenticated, setAuthenticated}) {
   useAuth(); // Utilizza il contesto dell'autenticazione
   const [menuOpen, setMenuOpen] = useState(false);
+  const ownerName = localStorage.getItem("ownerName");
+
+  
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -76,7 +79,7 @@ export default function Navbar({ authenticated, setAuthenticated, ownerName }) {
             <Accordion type="single" collapsible>
               <AccordionItem value="account">
                 <AccordionTrigger className="hover:text-green-800 transition-colors duration-200 flex items-center gap-2">
-                  Logout <FontAwesomeIcon icon={faUser} />
+                  {ownerName} <FontAwesomeIcon icon={faUser} />
                 </AccordionTrigger>
                 <AccordionContent>
                   <button

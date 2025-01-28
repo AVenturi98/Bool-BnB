@@ -11,8 +11,15 @@ import NotFound from './pages/NotFound'
 import PropertiesList from './components/PropertiesList'
 
 
-function App() {
 
+function App() {
+  const setOwnerName = () => {
+    if (localStorage.getItem("ownerName") !== null) {
+      return localStorage.getItem("ownerName");
+    } else {
+      return "";
+    }
+  }
   const setAuthenticated = () => {
     if (localStorage.getItem("token") !== null) {
       return true;
@@ -35,7 +42,7 @@ function App() {
             <Route path='/:id' element={<Show />} />
             <Route path='/mail' element={<MailForm />} />
             <Route path='/properties' element={<PropertiesForm />} />
-            <Route path='/login' element={<Login authenticated={authenticated} setAuthenticated={setAuthenticated} />} />
+            <Route path='/login' element={<Login setOwnerName={setOwnerName} authenticated={authenticated} setAuthenticated={setAuthenticated} />} />
           </Route>
           <Route element={<BlankLayout />}>
             <Route path='*' element={<NotFound />} />
