@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function MailForm() {
+export default function MailForm({ owner }) {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -10,7 +10,8 @@ export default function MailForm() {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const data = { firstName, lastName, email, message }
+        const data = { firstName, lastName, email, message, owner }
+
 
         try {
             const response = await fetch('http://localhost:3000/send', {
@@ -27,6 +28,13 @@ export default function MailForm() {
             setStatus('Errore durante l\'invio.');
             console.error(error);
         }
+        setFirstName('')
+        setLastName('')
+        setEmail('')
+        setMessage('')
+        setTimeout(() => {
+            setStatus('')
+        }, 2000)
     };
 
 

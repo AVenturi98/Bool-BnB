@@ -28,11 +28,11 @@ const transporter = nodemailer.createTransport({
 });
 
 app.post('/send', (req, res) => {
-  const { firstName, lastName ,email, message } = req.body;
+  const { firstName, lastName, email, message, owner } = req.body;
 
   const mailOptions = {
     from: `"${firstName}" "${lastName}" <${email}>`,
-    to: 'venditore@example.com',
+    to: `${owner}`,
     subject: 'Nuovo Messaggio da Cliente',
     text: message,
   };
