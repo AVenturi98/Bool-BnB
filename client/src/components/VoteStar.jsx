@@ -13,8 +13,6 @@ export default function VoteStar({ vote = [] }) {
     }
 
     return (
-
         <div className="opacity-60">{stars}</div>
-
     )
 }

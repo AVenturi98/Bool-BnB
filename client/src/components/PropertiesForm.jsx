@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
+import GlobalContext from "@/contexts/GlobalContext";
 
 const initialFormData = {
   title: "",
@@ -18,6 +19,8 @@ const initialFormData = {
 export default function PropertiesForm() {
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
+
+  const { setIsLoading } = useContext(GlobalContext)
 
   function handleChange(e) {
     const { value, name } = e.target;
@@ -84,6 +87,8 @@ export default function PropertiesForm() {
       return;
     }
 
+    setIsLoading(true)
+
     // Invia i dati
     axios.post("http://localhost:3000/api/properties/", { ...formData, token })
       .then(response => {
@@ -99,7 +104,10 @@ export default function PropertiesForm() {
         } else {
           alert("Si è verificato un errore. Riprova più tardi.");
         }
-      });
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   return (
