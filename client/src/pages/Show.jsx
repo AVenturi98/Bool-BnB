@@ -84,16 +84,22 @@ export default function Show() {
 
                 {/* DESCRIPTION */}
                 <section className="mt-6">
-                    <div className="flex justify-between items-center">
-                        <div>
-                            <h1 className="text-4xl font-bold">{property.title}</h1>
-                            <h4 className="text-2xl font-semibold">
-                                {property.building_type} a {property.city}, {property.address}
-                            </h4>
+                    <div className="flex flex-col items-start py-2">
+                        <div className="flex justify-between w-full">
+                            <div>
+                                <h1 className="text-4xl font-bold">{property.title}</h1>
+                                <h4 className="text-2xl font-semibold">
+                                    {property.building_type} a {property.city}
+                                </h4>
+                                <h4 className="text-2xl font-semibold">{property.address}</h4>
+                            </div>
+                            {property.hearts !== undefined && (
+                                <div className="flex items-center">
+                                    <CounterButton property={property} />
+                                </div>
+                            )}
                         </div>
-                        {property.hearts !== undefined && (
-                            <CounterButton property={property} />
-                        )}
+                        <p className="mt-5">{property.description}</p>
                     </div>
 
                     {/* BADGE */}
