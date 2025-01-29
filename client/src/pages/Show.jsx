@@ -34,7 +34,7 @@ export default function Show() {
     const [owner, setOwner] = useState("");
     const [review, setReview] = useState([]);
     const [hearts, setHearts] = useState(0);
-    const [openForm, setOpenForm] = useState(false); // Toggle form
+    const [formReview, setFormReview] = useState(false); // Toggle form
 
     const { setIsLoading } = useContext(GlobalContext)
 
@@ -67,15 +67,14 @@ export default function Show() {
         fetchPost();
     }, [id]);
 
-    const toggleForm = () => {
-        setOpenForm(true);
-        document.getElementById("openForm").style.display = "none";
+    const openForm = () => {
+        setFormReview(true);
     };
 
     const closeForm = () => {
-        setOpenForm(false);
-        document.getElementById("openForm").style.display = "block";
+        setFormReview(false)
     };
+
 
     console.log('Property Image:', property.img);
 
@@ -193,15 +192,24 @@ export default function Show() {
                         </div>
                     </div>
 
-                    <button
-                        type="button"
-                        id="openForm"
-                        onClick={toggleForm}
-                        className="mb-6 hover:text-indigo-500 hover:underline"
-                    >
-                        Aggiungi una recensione
-                    </button>
-                    {openForm && (
+                    {!formReview ?
+                        <button
+                            type="button"
+                            id="openForm"
+                            onClick={openForm}
+                            className="mb-6 hover:text-indigo-500 hover:underline"
+                        >
+                            Aggiungi una recensione
+                        </button> :
+                        <button
+                            type="button"
+                            id="closeForm"
+                            onClick={closeForm}
+                            className="mb-6 hover:text-indigo-500 hover:underline"
+                        >
+                            Chiudi finestra
+                        </button>}
+                    {formReview && (
                         <FormReview id={id} callback={closeForm} onSubmit={fetchPost} />
                     )}
 
@@ -221,7 +229,7 @@ export default function Show() {
                                             </div>
                                             <img src={greenLogo} className="h-20" alt="logo" />
                                         </div>
-                                        <div className="p-1 my-3 w-40 border border-green-500 rounded-xs bg-green-50">
+                                        <div className="p-1 my-3 w-[200px] border border-green-500 rounded-xs bg-green-50 flex gap-2">
                                             permanenza: <b>{element.days}</b>{" "}
                                             <span className="italic text-gray-400">giorni</span>
                                         </div>
@@ -239,8 +247,8 @@ export default function Show() {
                     ) : (
                         <div className="flex justify-center">Nessuna recensione</div>
                     )}
-                </section>
-            </div>
+                </section >
+            </div >
         </>
     );
 }

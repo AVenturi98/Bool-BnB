@@ -54,7 +54,8 @@ function show(req, res) {
     }
 
     const sql = `SELECT *, date_format(reviews.date, '%d-%m-%Y') as date_it
-     FROM reviews WHERE property_id = ?`
+     FROM reviews WHERE property_id = ?
+     ORDER BY reviews.id DESC`
 
     connection.query(sql, [id], (err, results) => {
       if (err) return res.status(500).json({ message: err.message })
@@ -141,7 +142,7 @@ function storeReview(req, res) {
   const id = req.params.id
 
   if (
-    !days || isNaN(days) || days < 0 ||
+    !days || isNaN(days) || days < 0 || days > 365 ||
     !vote || isNaN(vote) || vote < 0 || vote > 5
   ) {
     return res.status(400).send({ message: 'Days deve essere un numero positivo e vote deve essere compreso tra 0 e 5' })
