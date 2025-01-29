@@ -9,7 +9,9 @@ import Show from './pages/Show'
 import { AuthProvider } from './contexts/AuthContext'
 import NotFound from './pages/NotFound'
 import PropertiesList from './components/PropertiesList'
+import MyProperties from './components/MyProperties'
 import { GlobalProvider } from './contexts/GlobalContext'
+
 
 
 
@@ -36,6 +38,7 @@ function App() {
 
   return (
     <BrowserRouter>
+
       <GlobalProvider>
         <AuthProvider>
           <Routes>
@@ -43,6 +46,7 @@ function App() {
             <Route path='/' element={<DefaultLayout authenticated={authenticated} setAuthenticated={setAuthenticated} />}>
 
               <Route path='/' element={<PropertiesList />} />
+              <Route path='/my-properties' element={<MyProperties />} />
               <Route path='/properties/:id' element={<Show />} />
               <Route path='/mail' element={<MailForm />} />
               <Route path='/properties' element={<PropertiesForm />} />

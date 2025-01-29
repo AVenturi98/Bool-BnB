@@ -30,6 +30,38 @@ function index(req, res) {
   });
 }
 
+//my properties
+function myProperties(req, res) {
+  const token = req.headers.authorization.split(' ')[1]; // Estrai il token dall'header
+  try {
+    const decoded = jwt.verify(token, SECRET_KEY); // Decodifica il token
+    const ownerID = decoded.id; // Estrai l'ID del proprietario dal token
+
+    const sql = `  SELECT properties.*, AVG(reviews.vote) AS avg_vote
+  FROM properties
+  LEFT JOIN reviews ON properties.id = reviews.property_id
+  WHERE properties.owner_id = ?
+  GROUP BY properties.id
+  ORDER BY properties.hearts DESC`;
+    connection.query(sql, [ownerID], (err, properties) => {
+      if (err) {
+        console.error('Errore nella query:', err);
+        return res.status(500).json({ message: 'Errore recupero dati dal database' });
+      }
+      // path immagine
+    properties.forEach(property => {
+      if (property.img && !property.img.startsWith('http')) {
+        property.img = `${process.env.BE_HOST}/properties/${property.img}`;
+      }
+    });
+      res.json(properties);
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ message: "Token non valido o scaduto" });
+  }
+}
+
 //show
 function show(req, res) {
   const id = parseInt(req.params.id)
@@ -226,4 +258,4 @@ function getHearts(req, res) {
   });
 }
 
-module.exports = { index, show, storeReview, storeProperty, login, storeHearts, getHearts }
+module.exports = { index, show, storeReview, storeProperty, login, storeHearts, getHearts, myProperties }

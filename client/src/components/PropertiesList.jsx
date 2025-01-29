@@ -18,6 +18,8 @@ export default function PropertiesList() {
       .get("http://localhost:3000/api/properties/")
       .then((response) => {
         setProperties(response.data);
+        console.log(response.data);
+        
       })
       .catch((err) => {
         console.error(err);

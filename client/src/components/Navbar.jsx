@@ -71,12 +71,13 @@ export default function Navbar({ authenticated, setAuthenticated}) {
             About
           </a>
         </li>
-        <li>
-          <a className="hover:text-green-800 transition-colors duration-200">
-            Services
-          </a>
-        </li>
         {authenticated ? (
+          <>
+          <li>
+          <Link to="/my-properties" className="hover:text-green-800 transition-colors duration-200">
+            Le mie proprietà
+          </Link>
+          </li>
           <li className="relative">
             <Accordion type="single" collapsible>
               <AccordionItem value="account">
@@ -94,6 +95,7 @@ export default function Navbar({ authenticated, setAuthenticated}) {
               </AccordionItem>
             </Accordion>
           </li>
+          </>
         ) : (
           <Link to="/Login">
             <li className="hover:text-green-800 transition-colors duration-200">
