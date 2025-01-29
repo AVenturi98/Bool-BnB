@@ -41,7 +41,7 @@ export default function MyProperties() {
 
   return (
     <>
-      <div className="container mx-auto p-4">
+      <div className="container mx-auto p-4 pt-[105px]">
         <div className="flex justify-between items-center mb-3">
           <h1 className="text-2xl font-bold text-green-700 mb-4">Le mie Proprietà</h1>
           <Button asChild className="bg-green-600 text-white font-semibold hover:bg-cyan-600 transition hover:-translate-y-1 hover:scale-101 delay-100

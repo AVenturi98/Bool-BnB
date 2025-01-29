@@ -23,8 +23,8 @@ export default function BtnTop() {
                 type="button"
                 id="btn_top"
                 onClick={goBackTop}
-                className="p-0 fixed right-[60px] bottom-[50px] z-1 rounded-full hover:scale-105">
-                <FontAwesomeIcon icon={faCircleArrowUp} style={{ color: "#219735", }} className="text-4xl" />
+                className="p-0 fixed right-[60px] bottom-[50px] z-1 rounded-full transition hover:-translate-y-1 hover:scale-105 delay-50">
+                <FontAwesomeIcon icon={faCircleArrowUp} className="text-4xl text-green-600 hover:text-cyan-600" />
             </button>
         </div>
     )

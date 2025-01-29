@@ -75,6 +75,7 @@ export default function Show() {
 
     useEffect(() => {
         fetchPost();
+        window.scrollTo(0, 0)
     }, [id]);
 
     const openForm = () => {
@@ -91,7 +92,7 @@ export default function Show() {
 
     return (
         <>
-            <div className="container mt-5">
+            <div className="container mt-5 pt-[105px]">
                 <GoBackBtn />
             </div>
 
@@ -159,7 +160,7 @@ export default function Show() {
                         <h1 className="text-2xl font-semibold mt-12">
                             Hai bisogno di più informazioni?
                         </h1>
-                        <Button className="bg-green-600 ml-auto" onClick={sendmail}>Sono interessato</Button>
+                        <Button className="bg-green-600 ml-auto hover:bg-cyan-600 transition hover:-translate-y-1 hover:scale-101 delay-100" onClick={sendmail}>Sono interessato</Button>
                     </div>
                     <p className="my-3 text-lg">
                         Mettiti in contatto con {owner.name}, il proprietario di casa
@@ -210,7 +211,7 @@ export default function Show() {
                             type="button"
                             id="openForm"
                             onClick={openForm}
-                            className="mb-6 bg-green-600 rounded-xl py-2 px-2 font-medium text-white hover:bg-cyan-600"
+                            className="mb-6 bg-green-600 rounded-md py-1.5 px-3 font-medium text-white hover:bg-cyan-600"
                         >
                             + Aggiungi una recensione
                         </button> :
@@ -218,7 +219,7 @@ export default function Show() {
                             type="button"
                             id="closeForm"
                             onClick={closeForm}
-                            className="mb-6 bg-green-600 rounded-xl py-2 px-2 font-medium text-white hover:bg-cyan-600"
+                            className="mb-6 bg-green-600 rounded-md py-1.5 px-3 font-medium text-white hover:bg-cyan-600"
                         >
                             - Chiudi finestra
                         </button>}

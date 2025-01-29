@@ -112,7 +112,7 @@ export default function PropertiesForm() {
   }
 
   return (
-    <div className="bg-gray-100 py-5">
+    <div className="bg-gray-100 py-5 pt-[105px]">
       <div className="container mt-5">
         <GoBackBtn />
       </div>

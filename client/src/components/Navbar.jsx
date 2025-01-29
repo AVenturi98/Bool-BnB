@@ -40,7 +40,7 @@ export default function Navbar({ authenticated, setAuthenticated }) {
 
 
   return (
-    <nav className="bg-white text-green-600 container flex justify-between items-center px-5 py-3 border-b border-gray-200 shadow-sm relative z-10">
+    <nav className="bg-white text-green-600 flex justify-between items-center px-8 border-b border-gray-200 shadow-sm relative z-10 w-full">
       <Link to='/' className="hover:scale-110 transition-transform duration-300 ease-in-out">
         <figure>
           <img src={logo} className="w-auto h-20" alt="Logo" />
@@ -81,7 +81,7 @@ export default function Navbar({ authenticated, setAuthenticated }) {
             <li className="relative">
               <Accordion type="single" collapsible>
                 <AccordionItem value="account">
-                  <AccordionTrigger className="hover:text-cyan-600 transition-colors duration-200 flex items-center gap-2">
+                  <AccordionTrigger >
                     {ownerName} <FontAwesomeIcon icon={faUser} />
                   </AccordionTrigger>
                   <AccordionContent>
@@ -98,7 +98,7 @@ export default function Navbar({ authenticated, setAuthenticated }) {
           </>
         ) : (
           <Link to="/Login">
-            <li className="hover:text-green-800 transition-colors duration-200">
+            <li className="hover:text-cyan-600">
               Login <FontAwesomeIcon icon={faUser} />
             </li>
           </Link>
