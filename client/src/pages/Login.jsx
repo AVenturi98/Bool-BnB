@@ -23,9 +23,9 @@ export default function Login({setOwnerName, authenticated, setAuthenticated }) 
       console.log(authenticated);
       
       // Se il login è riuscito
-      alert("Benvenuto!"); // Mostra il messaggio di successo
+      alert(`Benvenuto ${response.data.ownerName}!`); // Mostra il messaggio di successo
       // Esempio di redirezione alla dashboard
-      window.location.href = '/properties';
+      window.location.href = '/my-properties';
     } catch (error) {
       // Se il login fallisce
       if (error.response && error.response.status === 401) {

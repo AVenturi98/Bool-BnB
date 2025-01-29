@@ -19,7 +19,7 @@ import MailForm from "../components/MailForm";
 import VoteStar from "../components/VoteStar";
 import FormReview from "../components/FormReview";
 import CounterButton from "@/components/Hearts";
-import GoHomeButton from "@/components/GoHomeButton";
+import GoBackBtn from "@/components/GoBackBtn";
 
 export default function Show() {
     const [property, setProperty] = useState("");
@@ -65,7 +65,7 @@ export default function Show() {
     return (
         <>
             <div className="container mt-5">
-                <GoHomeButton />
+                <GoBackBtn />
             </div>
 
             <div className="p-6 mt-8 lg:px-60">

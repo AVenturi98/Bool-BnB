@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import GoBackBtn from "./GoBackBtn";
 
 const initialFormData = {
   title: "",
@@ -103,194 +104,199 @@ export default function PropertiesForm() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 py-6 my-6">
-      <form
-        className="w-full max-w-4xl bg-white p-8 shadow-md rounded-lg grid grid-cols-1 md:grid-cols-2 gap-6"
-        onSubmit={handleSubmit}
-      >
-        <h1 className="text-2xl font-bold mb-6 text-gray-800 text-center col-span-2">
-          Aggiungi un appartamento
-        </h1>
-
-        {/* Colonna 1 */}
-        <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-            Nome dell'appartamento*
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            maxLength={255}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="rooms" className="block text-sm font-medium text-gray-700">
-            Numero di stanze*
-          </label>
-          <input
-            type="number"
-            id="rooms"
-            name="rooms"
-            value={formData.rooms}
-            onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="beds" className="block text-sm font-medium text-gray-700">
-            Numero di letti*
-          </label>
-          <input
-            type="number"
-            id="beds"
-            name="beds"
-            value={formData.beds}
-            onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="bathrooms" className="block text-sm font-medium text-gray-700">
-            Numero di bagni*
-          </label>
-          <input
-            type="number"
-            id="bathrooms"
-            name="bathrooms"
-            value={formData.bathrooms}
-            onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            required
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="m2" className="block text-sm font-medium text-gray-700">
-            Grandezza (m²)*
-          </label>
-          <input
-            type="number"
-            id="m2"
-            name="m2"
-            value={formData.m2}
-            onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            required
-          />
-        </div>
-
-        {/* Colonna 2 */}
-        <div className="mb-4">
-          <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-            Indirizzo*
-          </label>
-          <input
-            type="text"
-            id="address"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            required
-            maxLength={60}
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-            Città*
-          </label>
-          <input
-            type="text"
-            id="city"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            required
-            maxLength={60}
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="building_type" className="block text-sm font-medium text-gray-700">
-            Tipo di costruzione
-          </label>
-          <input
-            type="text"
-            id="building_type"
-            name="building_type"
-            value={formData.building_type}
-            onChange={handleChange}
-            maxLength={50}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            Email*
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            required
-            maxLength={255}
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="img" className="block text-sm font-medium text-gray-700">
-            URL immagine
-          </label>
-          <input
-            type="text"
-            id="img"
-            name="img"
-            value={formData.img}
-            onChange={handleChange}
-            maxLength={255}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
-        <div className="mb-4 col-span-2">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-            Descrizione*
-          </label>
-          <textarea
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            name="description"
-            rows={4}
-            id="description"
-            value={formData.description}
-            onChange={handleChange}
-            maxLength={600}
-          >
-          </textarea>
-        </div>
-        <p className="text-sm text-red-600 col-span-2">{error}</p>
-        <p className="text-sm col-span-2">* I campi devono essere obbligatori</p>
-        <button
-          type="submit"
-          className="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 col-span-2"
+    <div className="bg-gray-100 py-5">
+      <div className="container mt-5">
+        <GoBackBtn />
+      </div>
+      <div className="flex justify-center items-center min-h-screen bg-gray-100 py-6 my-6">
+        <form
+          className="w-full max-w-4xl bg-white p-8 shadow-md rounded-lg grid grid-cols-1 md:grid-cols-2 gap-6"
+          onSubmit={handleSubmit}
         >
-          Invia
-        </button>
-      </form>
-    </div>
-  );
+          <h1 className="text-2xl font-bold mb-6 text-gray-800 text-center col-span-2">
+            Aggiungi un appartamento
+          </h1>
+
+          {/* Colonna 1 */}
+          <div className="mb-4">
+            <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+              Nome dell'appartamento*
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              maxLength={255}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="rooms" className="block text-sm font-medium text-gray-700">
+              Numero di stanze*
+            </label>
+            <input
+              type="number"
+              id="rooms"
+              name="rooms"
+              value={formData.rooms}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="beds" className="block text-sm font-medium text-gray-700">
+              Numero di letti*
+            </label>
+            <input
+              type="number"
+              id="beds"
+              name="beds"
+              value={formData.beds}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="bathrooms" className="block text-sm font-medium text-gray-700">
+              Numero di bagni*
+            </label>
+            <input
+              type="number"
+              id="bathrooms"
+              name="bathrooms"
+              value={formData.bathrooms}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="m2" className="block text-sm font-medium text-gray-700">
+              Grandezza (m²)*
+            </label>
+            <input
+              type="number"
+              id="m2"
+              name="m2"
+              value={formData.m2}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+            />
+          </div>
+
+          {/* Colonna 2 */}
+          <div className="mb-4">
+            <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+              Indirizzo*
+            </label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+              maxLength={60}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+              Città*
+            </label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+              maxLength={60}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="building_type" className="block text-sm font-medium text-gray-700">
+              Tipo di costruzione
+            </label>
+            <input
+              type="text"
+              id="building_type"
+              name="building_type"
+              value={formData.building_type}
+              onChange={handleChange}
+              maxLength={50}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              Email*
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              required
+              maxLength={255}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="img" className="block text-sm font-medium text-gray-700">
+              URL immagine
+            </label>
+            <input
+              type="text"
+              id="img"
+              name="img"
+              value={formData.img}
+              onChange={handleChange}
+              maxLength={255}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+          <div className="mb-4 col-span-2">
+            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+              Descrizione*
+            </label>
+            <textarea
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              name="description"
+              rows={4}
+              id="description"
+              value={formData.description}
+              onChange={handleChange}
+              maxLength={600}
+            >
+            </textarea>
+          </div>
+          <p className="text-sm text-red-600 col-span-2">{error}</p>
+          <p className="text-sm col-span-2">* I campi devono essere obbligatori</p>
+          <button
+            type="submit"
+            className="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 col-span-2"
+          >
+            Invia
+          </button>
+        </form>
+      </div>
+      </div>
+      );
 }
