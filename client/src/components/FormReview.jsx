@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 
-export default function FormReview({ id, onSubmit = () => { }, callabck = () => { } }) {
+export default function FormReview({ id, onSubmit = () => { }, callback = () => { } }) {
 
     const initReview = {
         property_id: id,
@@ -36,8 +36,8 @@ export default function FormReview({ id, onSubmit = () => { }, callabck = () => 
             return
         }
 
-        if (review.days < 1) {
-            setError('I giorni devono essere maggiori di 0')
+        if (review.days < 1 || review.days > 365) {
+            setError('I giorni devono essere maggiori di 0 e minori di 365')
             return
         }
 
@@ -55,7 +55,7 @@ export default function FormReview({ id, onSubmit = () => { }, callabck = () => 
             .then((res) => {
                 setReview(initReview)
                 onSubmit()
-                callabck()
+                callback()
                 alert('Recensione aggiunta')
             })
             .catch((err) => {
