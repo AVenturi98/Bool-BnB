@@ -28,6 +28,7 @@ import {
     faStarHalfStroke,
     faStarHalf
 } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "@/components/ui/button.jsx";
 
 export default function Show() {
     const [property, setProperty] = useState("");
@@ -39,6 +40,16 @@ export default function Show() {
     const { setIsLoading } = useContext(GlobalContext)
 
     const { id } = useParams()
+
+    const sendmail = () => {
+        axios
+            .post("http://localhost:3000/send-mail")
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => console.error(err.message));
+    };
+
 
     const fetchPost = () => {
 
@@ -145,9 +156,12 @@ export default function Show() {
 
                 {/* FORM CONTACT */}
                 <section>
-                    <h1 className="text-2xl font-semibold mt-12">
-                        Hai bisogno di più informazioni?
-                    </h1>
+                    <div className="flex items-baseline m-auto py-2">
+                        <h1 className="text-2xl font-semibold mt-12">
+                            Hai bisogno di più informazioni?
+                        </h1>
+                        <Button className="bg-green-600 ml-auto" onClick={sendmail}>Sono interessato</Button>
+                    </div>
                     <p className="my-3 text-lg">
                         Mettiti in contatto con {owner.name}, il proprietario di casa
                     </p>
