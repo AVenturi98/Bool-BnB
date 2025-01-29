@@ -9,7 +9,6 @@ import MailForm from "../components/MailForm";
 import VoteStar from "../components/VoteStar";
 import FormReview from "../components/FormReview";
 import CounterButton from "@/components/Hearts";
-import GoHomeButton from "@/components/GoHomeButton";
 import GoBackBtn from "@/components/GoBackBtn";
 
 // Images
@@ -54,7 +53,7 @@ export default function Show() {
                     setReview(res.data.reviews);
                 }
                 setHearts(res.data.hearts);
-                console.log(res.data);
+                // console.log(res.data);
             })
             .catch((err) => console.error(err.message))
             .finally(() => {

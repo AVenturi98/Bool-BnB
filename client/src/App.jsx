@@ -11,6 +11,7 @@ import NotFound from './pages/NotFound'
 import PropertiesList from './components/PropertiesList'
 import MyProperties from './components/MyProperties'
 import { GlobalProvider } from './contexts/GlobalContext'
+import BtnTop from './components/BtnTop'
 
 
 
@@ -56,6 +57,7 @@ function App() {
               <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>
+          <BtnTop />
         </AuthProvider>
       </GlobalProvider>
     </BrowserRouter>
