@@ -299,12 +299,13 @@ export default function PropertiesForm() {
           <p className="text-sm col-span-2">* I campi devono essere obbligatori</p>
           <button
             type="submit"
-            className="w-full bg-green-500 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 col-span-2"
+            className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-cyan-600 transition hover:-translate-y-1 hover:scale-101 delay-100
+ col-span-2"
           >
             Invia
           </button>
         </form>
       </div>
-      </div>
-      );
+    </div>
+  );
 }

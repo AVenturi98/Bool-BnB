@@ -197,20 +197,22 @@ export default function Show() {
                             type="button"
                             id="openForm"
                             onClick={openForm}
-                            className="mb-6 hover:text-indigo-500 hover:underline"
+                            className="mb-6 bg-green-600 rounded-xl py-2 px-2 font-medium text-white hover:bg-cyan-600"
                         >
-                            Aggiungi una recensione
+                            + Aggiungi una recensione
                         </button> :
                         <button
                             type="button"
                             id="closeForm"
                             onClick={closeForm}
-                            className="mb-6 hover:text-indigo-500 hover:underline"
+                            className="mb-6 bg-green-600 rounded-xl py-2 px-2 font-medium text-white hover:bg-cyan-600"
                         >
-                            Chiudi finestra
+                            - Chiudi finestra
                         </button>}
                     {formReview && (
-                        <FormReview id={id} callback={closeForm} onSubmit={fetchPost} />
+                        <div className={`animate__animated ${formReview ? "animate__fadeInDown" : "animate__fadeOutUp"}`}>
+                            <FormReview id={id} callback={closeForm} onSubmit={fetchPost} />
+                        </div>
                     )}
 
                     {review.length > 0 ? (

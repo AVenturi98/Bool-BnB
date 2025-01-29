@@ -134,7 +134,7 @@ export default function MailForm({ owner }) {
                     </div>
                 </div>
                 <div className='flex justify-around flex-col'>
-                    <button type="submit" className="mt-6 w-3xs rounded-md bg-green px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-green-300 cursor-pointer bg-green-400 hover:bg-green-500 transition hover:-translate-y-1 hover:scale-101 delay-100">Invia</button>
+                    <button type="submit" className="mt-6 w-3xs rounded-md bg-green px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-green-300 cursor-pointer bg-green-600 hover:bg-cyan-600 transition hover:-translate-y-1 hover:scale-101 delay-100 font-medium">Invia</button>
                     <p>{status}</p>
                     <span className='text-red-600 mt-3'>{error}</span>
                 </div>
