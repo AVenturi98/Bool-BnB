@@ -47,6 +47,35 @@ app.post('/send', (req, res) => {
 });
 
 
+app.post('/send-mail', (req, res) => {
+  const transport = nodemailer.createTransport({
+    host: "live.smtp.mailtrap.io",
+    port: 587,
+    auth: {
+      user: "api",
+      pass: "d10b3191916acc28e9db5a702bb74be1"
+    }
+  });
+
+  const mailOptions = {
+    from: '"BoolBnB"<info@demomailtrap.com>',
+    to: "domenici.simone00@gmail.com",  // Inserisci la tua mail 
+    subject: "Grazie per l'interesse!",
+    text: "Grazie per averci contattato, ti risponderemo al più presto!",
+    html: `<h1>Grazie per averci contattato!</h1> <p>Verrai ricontattato al più presto!</p>` 
+  };
+
+  transport.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Errore nell\'invio della mail.' });
+    }
+    res.status(200).json({ message: 'Email inviata con successo!' });
+  });
+
+});
+
+
 app.use(express.static('public'))
 app.use(trimString)
 
