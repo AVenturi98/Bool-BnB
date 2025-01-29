@@ -48,8 +48,10 @@ function show(req, res) {
     const bnb = results[0]
 
 
-    // path immagine
-    bnb.img = `${process.env.BE_HOST}/properties/${bnb.img}`
+    // Controlla se l'URL dell'immagine è già completo
+    if (bnb.img && !bnb.img.startsWith('http')) {
+      bnb.img = `${process.env.BE_HOST}/properties/${bnb.img}`;
+    }
 
     const sql = `SELECT *, date_format(reviews.date, '%d-%m-%Y') as date_it
      FROM reviews WHERE property_id = ?`

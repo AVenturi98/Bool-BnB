@@ -34,6 +34,7 @@ export default function Show() {
         axios
             .get(`http://localhost:3000/api/properties/${id}`)
             .then((res) => {
+                console.log("Dati ricevuti dal backend:", res.data);
                 setProperty(res.data);
                 setOwner(res.data.owner[0]);
                 if (res.data.reviews.length !== 0) {
