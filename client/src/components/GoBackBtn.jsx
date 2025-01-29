@@ -7,7 +7,7 @@ export default function GoBackBtn() {
   return (
     <button
       onClick={() => navigate(-1)}
-      className="bg-green-600 rounded-xl hover:bg-green-700 text-white font-bold py-2 px-4 rounded text-xl"
+      className="bg-green-600 rounded-xl hover:bg-cyan-600 text-white font-bold py-2 px-4 text-xl"
     >
       <FontAwesomeIcon icon={faArrowLeft} />
     </button>

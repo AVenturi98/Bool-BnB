@@ -19,7 +19,7 @@ export default function PropertiesList() {
       .then((response) => {
         setProperties(response.data);
         console.log(response.data);
-        
+
       })
       .catch((err) => {
         console.error(err);
@@ -40,7 +40,7 @@ export default function PropertiesList() {
         <Hero />
       </div>
       <div className="container mx-auto p-4">
-        <h1 className="text-2xl font-bold text-green-700 mb-4">Properties</h1>
+        <h1 className="text-2xl font-bold text-green-700 mb-4">Immobili</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {properties.map((property) => (
             <Card key={property.id} property={property} />

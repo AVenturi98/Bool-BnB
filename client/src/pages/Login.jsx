@@ -60,7 +60,7 @@ export default function Login({ setOwnerName, authenticated, setAuthenticated })
             />
           </Link>
           <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            Sign in to your account
+            Entra nel tuo account
           </h2>
         </div>
 
@@ -68,7 +68,7 @@ export default function Login({ setOwnerName, authenticated, setAuthenticated })
           <form onSubmit={handleOnSubmit} className="space-y-6">
             <div>
               <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
-                Email address
+                Indirizzo Email
               </label>
               <div className="mt-2">
                 <input
@@ -103,9 +103,9 @@ export default function Login({ setOwnerName, authenticated, setAuthenticated })
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-green-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-green-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+                className="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-cyan-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
               >
-                Sign in
+                Entra
               </button>
             </div>
           </form>

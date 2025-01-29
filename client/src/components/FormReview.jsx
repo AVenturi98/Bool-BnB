@@ -147,8 +147,9 @@ export default function FormReview({ id, onSubmit = () => { }, callback = () => 
                     </div>
                 </div>
                 <div className='flex justify-between items-center'>
-                    <button type="submit" className="my-6 rounded-md bg-green px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-green-300 cursor-pointer bg-green-400 hover:bg-green-500 transition hover:-translate-y-1 hover:scale-101 delay-100">Aggiungi</button>
-                    <span className='text-red-600'>{error}</span>                </div>
+                    <button type="submit" className="my-6 w-3xs rounded-md bg-green px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-green-300 cursor-pointer bg-green-600 hover:bg-cyan-600 transition hover:-translate-y-1 hover:scale-101 delay-100">Aggiungi</button>
+                    <span className='text-red-600'>{error}</span>
+                </div>
             </form>
         </>
     )

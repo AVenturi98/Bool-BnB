@@ -4,7 +4,7 @@ import { faFacebook, faTwitter, faInstagram, faLinkedin } from "@fortawesome/fre
 
 export default function Footer() {
   return (
-    <footer className="bg-white text-green-600 p-5 font-sans border-t-4 border-grey-400 mt-8 py-12">
+    <footer className="bg-white text-green-600 p-5 font-sans border-t-2 border-grey-400 mt-8 py-12">
       <div className="max-w-7xl mx-auto flex flex-wrap justify-between gap-5">
         {/* Descrizione */}
         <div className="flex-1 min-w-[250px]">
@@ -15,25 +15,20 @@ export default function Footer() {
 
         {/* Quick Links */}
         <div className="flex-1 min-w-[250px]">
-          <h3 className="text-green-800 mb-2 font-bold">Quick Links</h3>
+          <h3 className="text-green-800 mb-2 font-bold">Link Utili</h3>
           <ul className="list-none space-y-2">
             <li>
-              <a href="#" className="hover:text-green-500 transition-colors duration-300">
+              <a href="#" className="hover:text-cyan-600 transition-colors duration-300">
                 Home
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-green-500 transition-colors duration-300">
+              <a href="#" className="hover:text-cyan-600 transition-colors duration-300">
                 About
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-green-500 transition-colors duration-300">
-                Services
-              </a>
-            </li>
-            <li>
-              <a href="/login" className="hover:text-green-500 transition-colors duration-300">
+              <a href="/login" className="hover:text-cyan-600 transition-colors duration-300">
                 Login
               </a>
             </li>
@@ -42,14 +37,14 @@ export default function Footer() {
 
         {/* Social Media */}
         <div className="flex-1 min-w-[250px]">
-          <h3 className="text-green-800 mb-2 font-bold">Follow Us</h3>
+          <h3 className="text-green-800 mb-2 font-bold">Seguici</h3>
           <ul className="list-none space-y-2">
             <li>
               <a
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-green-500 transition-colors duration-300 flex items-center"
+                className="hover:text-cyan-600 transition-colors duration-300 flex items-center"
               >
                 <FontAwesomeIcon icon={faFacebook} className="mr-2" /> Facebook
               </a>
@@ -59,7 +54,7 @@ export default function Footer() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-green-500 transition-colors duration-300 flex items-center"
+                className="hover:text-cyan-600 transition-colors duration-300 flex items-center"
               >
                 <FontAwesomeIcon icon={faTwitter} className="mr-2" /> Twitter
               </a>
@@ -69,9 +64,9 @@ export default function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-green-500 transition-colors duration-300 flex items-center"
+                className="hover:text-cyan-600 transition-colors duration-300 flex items-center"
               >
-                <FontAwesomeIcon icon={faInstagram} className="mr-2" /> Instagram
+                <FontAwesomeIcon icon={faInstagram} className="mr-2 " /> Instagram
               </a>
             </li>
             <li>
@@ -79,7 +74,7 @@ export default function Footer() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-green-500 transition-colors duration-300 flex items-center"
+                className="hover:text-cyan-600 transition-colors duration-300 flex items-center"
               >
                 <FontAwesomeIcon icon={faLinkedin} className="mr-2" /> LinkedIn
               </a>

@@ -9,12 +9,12 @@ import { useAuth } from "@/contexts/AuthContext";
 
 
 
-export default function Navbar({ authenticated, setAuthenticated}) {
+export default function Navbar({ authenticated, setAuthenticated }) {
   useAuth(); // Utilizza il contesto dell'autenticazione
   const [menuOpen, setMenuOpen] = useState(false);
   const ownerName = localStorage.getItem("ownerName");
 
-  
+
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -47,12 +47,12 @@ export default function Navbar({ authenticated, setAuthenticated}) {
         </figure>
       </Link>
       <button
-        className="flex flex-col gap-1 cursor-pointer md:hidden "
+        className="flex flex-col gap-1 cursor-pointer md:hidden group"
         onClick={toggleMenu}
       >
-        <span className="w-6 h-1 bg-green-600 rounded"></span>
-        <span className="w-6 h-1 bg-green-600 rounded"></span>
-        <span className="w-6 h-1 bg-green-600 rounded"></span>
+        <span className="w-6 h-1 bg-green-600 rounded group-hover:bg-cyan-600"></span>
+        <span className="w-6 h-1 bg-green-600 rounded group-hover:bg-cyan-600"></span>
+        <span className="w-6 h-1 bg-green-600 rounded group-hover:bg-cyan-600"></span>
       </button>
       <ul
         className={`absolute top-16 right-0 bg-white flex  flex-col items-center gap-2 px-5 py-3 rounded shadow-lg border border-gray-200 transition-transform transform ${menuOpen
@@ -62,39 +62,39 @@ export default function Navbar({ authenticated, setAuthenticated}) {
         onClick={() => setMenuOpen(false)}
       >
         <Link to="/">
-          <li className="hover:text-green-800 transition-colors duration-200">
+          <li className="hover:text-cyan-600 transition-colors duration-200">
             Home <FontAwesomeIcon icon={faHouse} />
           </li>
         </Link>
         <li>
-          <a className="hover:text-green-800 transition-colors duration-200">
+          <a className="hover:text-cyan-600 transition-colors duration-200">
             About
           </a>
         </li>
         {authenticated ? (
           <>
-          <li>
-          <Link to="/my-properties" className="hover:text-green-800 transition-colors duration-200">
-            Le mie proprietà
-          </Link>
-          </li>
-          <li className="relative">
-            <Accordion type="single" collapsible>
-              <AccordionItem value="account">
-                <AccordionTrigger className="hover:text-green-800 transition-colors duration-200 flex items-center gap-2">
-                  {ownerName} <FontAwesomeIcon icon={faUser} />
-                </AccordionTrigger>
-                <AccordionContent>
-                  <button
-                    onClick={handleLogout}
-                    className="text-red-600 hover:text-red-800 transition-colors duration-200"
-                  >
-                    Logout
-                  </button>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </li>
+            <li>
+              <Link to="/my-properties" className="hover:text-cyan-600 transition-colors duration-200">
+                Le mie proprietà
+              </Link>
+            </li>
+            <li className="relative">
+              <Accordion type="single" collapsible>
+                <AccordionItem value="account">
+                  <AccordionTrigger className="hover:text-cyan-600 transition-colors duration-200 flex items-center gap-2">
+                    {ownerName} <FontAwesomeIcon icon={faUser} />
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <button
+                      onClick={handleLogout}
+                      className="text-red-600 hover:text-red-800 transition-colors duration-200"
+                    >
+                      Logout
+                    </button>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </li>
           </>
         ) : (
           <Link to="/Login">
