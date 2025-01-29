@@ -49,11 +49,11 @@ function myProperties(req, res) {
         return res.status(500).json({ message: 'Errore recupero dati dal database' });
       }
       // path immagine
-    properties.forEach(property => {
-      if (property.img && !property.img.startsWith('http')) {
-        property.img = `${process.env.BE_HOST}/properties/${property.img}`;
-      }
-    });
+      properties.forEach(property => {
+        if (property.img && !property.img.startsWith('http')) {
+          property.img = `${process.env.BE_HOST}/properties/${property.img}`;
+        }
+      });
       res.json(properties);
     });
   } catch (error) {
@@ -71,7 +71,6 @@ function show(req, res) {
           FROM properties
           WHERE properties.id = ?
           `
-
 
   connection.query(sql, [id], (err, results) => {
     if (err) return res.status(500).json({ message: err.message })
@@ -119,6 +118,7 @@ function show(req, res) {
   })
 }
 
+//Funzione per aggiungere proprietà
 function storeProperty(req, res) {
   const { title, rooms, beds, bathrooms, m2, address, city, building_type, email, img, token, description } = req.body;
   try {
@@ -167,7 +167,7 @@ function storeProperty(req, res) {
   }
 }
 
-//storeReview
+//funzione per aggiungere recensioni
 function storeReview(req, res) {
   const { text, name, days, vote } = req.body
 
@@ -258,4 +258,46 @@ function getHearts(req, res) {
   });
 }
 
-module.exports = { index, show, storeReview, storeProperty, login, storeHearts, getHearts, myProperties }
+//Funzione per ricercare un imobile
+function search(req, res) {
+  const { city, rooms, beds } = req.query;
+
+  // Controllo dei valori di rooms e beds
+  const parsedRooms = rooms ? parseInt(rooms, 10) : null;
+  const parsedBeds = beds ? parseInt(beds, 10) : null;
+
+  if (
+    isNaN(parsedRooms) || parsedRooms < 0 ||
+    isNaN(parsedBeds) || parsedBeds < 0
+  ) {
+    return res.status(400).send({ message: 'Le stanze o i letti devono numeri e maggiori di 0 ' })
+  }
+
+  const sql = `
+        SELECT * FROM properties 
+        WHERE 
+            (city = ? OR ? IS NULL)
+            AND (rooms > ? OR ? IS NULL)
+            AND (beds > ? OR ? IS NULL);
+    `;
+
+  const values = [
+    city || null, city || null,
+    rooms, rooms,
+    beds, beds
+  ];
+
+  connection.query(sql, values, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Errore nel recupero delle proprietà" });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Proprietà non trovata" });
+    }
+
+    res.json(results);
+  });
+};
+
+module.exports = { index, show, storeReview, storeProperty, login, storeHearts, getHearts, myProperties, search }
