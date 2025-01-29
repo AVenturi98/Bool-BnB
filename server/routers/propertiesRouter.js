@@ -8,8 +8,10 @@ router.get('/', propertiesController.index)
 //my properties
 router.get('/my-properties', propertiesController.myProperties)
 
-//show
+//Rotta per la ricerca
+router.get('/ricerca', propertiesController.search);
 
+//show
 router.get('/:id', propertiesController.show)
 
 //store
@@ -24,5 +26,7 @@ router.post('/:id/hearts', propertiesController.storeHearts)
 
 //Rotta per riordinare i cuori
 router.get('/:id/hearts', propertiesController.getHearts);
+
+
 
 module.exports = router
