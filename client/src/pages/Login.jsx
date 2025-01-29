@@ -2,9 +2,13 @@ import logo from '../assets/logo.svg'
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router';
+import GlobalContext from '@/contexts/GlobalContext';
+import { useContext } from 'react';
 
-export default function Login({setOwnerName, authenticated, setAuthenticated }) {
+export default function Login({ setOwnerName, authenticated, setAuthenticated }) {
   useAuth(); // Utilizza il contesto dell'autenticazione
+
+  const { setIsLoading } = useContext(GlobalContext)
 
   const handleOnSubmit = async (e) => {
     e.preventDefault()
@@ -13,6 +17,9 @@ export default function Login({setOwnerName, authenticated, setAuthenticated }) 
     const password = e.target.password.value;
 
     try {
+
+      setIsLoading(true)
+
       // Effettua una richiesta POST al server
       const response = await axios.post('http://localhost:3000/api/properties/login', { email, password });
       localStorage.setItem("token", response.data.token);
@@ -21,7 +28,7 @@ export default function Login({setOwnerName, authenticated, setAuthenticated }) 
       // Salva il token
       setAuthenticated(true); // Aggiorna lo stato globale
       console.log(authenticated);
-      
+
       // Se il login è riuscito
       alert(`Benvenuto ${response.data.ownerName}!`); // Mostra il messaggio di successo
       // Esempio di redirezione alla dashboard
@@ -34,6 +41,8 @@ export default function Login({setOwnerName, authenticated, setAuthenticated }) 
         console.error('Errore durante il login:', error);
         alert('Errore del server, riprova più tardi.');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 

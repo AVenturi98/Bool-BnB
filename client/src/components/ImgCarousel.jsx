@@ -9,9 +9,10 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import placeHolder from '../assets/placeholder.png'
 import { Link } from "react-router"
+import GlobalContext from "@/contexts/GlobalContext"
 
 export default function ImgCarousel() {
     const plugin = React.useRef(
@@ -20,17 +21,25 @@ export default function ImgCarousel() {
 
     const [properties, setProperties] = useState([])
 
+    const { setIsLoading } = useContext(GlobalContext)
+
     useEffect(() => {
         fetchImg()
     }, [])
 
     function fetchImg() {
+
+        setIsLoading(true)
+
         axios.get('http://localhost:3000/api/properties')
             .then(res => {
                 setProperties(res.data)
             })
             .catch(err => {
                 console.log(err)
+            })
+            .finally(() => {
+                setIsLoading(false)
             })
     }
 

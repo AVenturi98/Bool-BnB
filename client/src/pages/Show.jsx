@@ -1,6 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
+import GlobalContext from "../contexts/GlobalContext.jsx";
+
+// Components
+import HeroShow from "../components/HeroShow";
+import MailForm from "../components/MailForm";
+import VoteStar from "../components/VoteStar";
+import FormReview from "../components/FormReview";
+import CounterButton from "@/components/Hearts";
+import GoHomeButton from "@/components/GoHomeButton";
+import GoBackBtn from "@/components/GoBackBtn";
+
+// Images
+import greenLogo from "../assets/green.svg";
+import defaultImg from "../assets/placeholder.png";
+
+// Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as empty } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -12,14 +28,6 @@ import {
     faStarHalfStroke,
     faStarHalf
 } from "@fortawesome/free-solid-svg-icons";
-import greenLogo from "../assets/green.svg";
-import defaultImg from "../assets/placeholder.png";
-import HeroShow from "../components/HeroShow";
-import MailForm from "../components/MailForm";
-import VoteStar from "../components/VoteStar";
-import FormReview from "../components/FormReview";
-import CounterButton from "@/components/Hearts";
-import GoBackBtn from "@/components/GoBackBtn";
 
 export default function Show() {
     const [property, setProperty] = useState("");
@@ -28,12 +36,18 @@ export default function Show() {
     const [hearts, setHearts] = useState(0);
     const [openForm, setOpenForm] = useState(false); // Toggle form
 
-    const { id } = useParams();
+    const { setIsLoading } = useContext(GlobalContext)
+
+    const { id } = useParams()
 
     const fetchPost = () => {
+
+        setIsLoading(true)
+
         axios
             .get(`http://localhost:3000/api/properties/${id}`)
             .then((res) => {
+                console.log("Dati ricevuti dal backend:", res.data);
                 setProperty(res.data);
                 setOwner(res.data.owner[0]);
                 if (res.data.reviews.length !== 0) {
@@ -42,8 +56,12 @@ export default function Show() {
                 setHearts(res.data.hearts);
                 console.log(res.data);
             })
-            .catch((err) => err.message);
-    };
+            .catch((err) => console.error(err.message))
+            .finally(() => {
+                setIsLoading(false);
+            })
+    }
+
 
     useEffect(() => {
         fetchPost();
