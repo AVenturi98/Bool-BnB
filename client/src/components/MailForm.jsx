@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import GlobalContext from '@/contexts/GlobalContext';
 
 export default function MailForm({ owner }) {
     const [firstName, setFirstName] = useState('');
@@ -7,6 +8,8 @@ export default function MailForm({ owner }) {
     const [message, setMessage] = useState('');
     const [status, setStatus] = useState('');
     const [error, setError] = useState(null)
+
+    const { setIsLoading } = useContext(GlobalContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -35,6 +38,9 @@ export default function MailForm({ owner }) {
         }
 
         try {
+
+            setIsLoading(true)
+
             const response = await fetch('http://localhost:3000/send', {
                 method: 'POST',
                 headers: {
@@ -48,6 +54,8 @@ export default function MailForm({ owner }) {
         } catch (error) {
             setStatus('Errore durante l\'invio.');
             console.error(error);
+        } finally {
+            setIsLoading(false);
         }
         setFirstName('')
         setLastName('')

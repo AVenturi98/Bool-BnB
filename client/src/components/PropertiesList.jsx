@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Card from "./Card";
 import Hero from "./Hero.jsx";
+import GlobalContext from "../contexts/GlobalContext";
 
 export default function PropertiesList() {
   const [properties, setProperties] = useState([]);
   const [error, setError] = useState(null);
 
+  const { setIsLoading } = useContext(GlobalContext)
+
   useEffect(() => {
+
+    setIsLoading(true)
+
     axios
       .get("http://localhost:3000/api/properties/")
       .then((response) => {
@@ -16,6 +22,9 @@ export default function PropertiesList() {
       .catch((err) => {
         console.error(err);
         setError("Failed to fetch properties.");
+      })
+      .finally(() => {
+        setIsLoading(false)
       });
   }, []);
 

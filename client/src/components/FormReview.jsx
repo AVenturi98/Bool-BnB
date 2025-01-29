@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios'
+import GlobalContext from '@/contexts/GlobalContext'
 
 export default function FormReview({ id, onSubmit = () => { }, callabck = () => { } }) {
 
@@ -13,6 +14,8 @@ export default function FormReview({ id, onSubmit = () => { }, callabck = () => 
 
     const [review, setReview] = useState(initReview)
     const [error, setError] = useState(null)
+
+    const { setIsLoading } = useContext(GlobalContext)
 
     function handleChange(e) {
         const { name, value } = e.target
@@ -51,6 +54,8 @@ export default function FormReview({ id, onSubmit = () => { }, callabck = () => 
             return
         }
 
+        setIsLoading(true)
+
         axios.post(`http://localhost:3000/api/properties/${id}`, review)
             .then((res) => {
                 setReview(initReview)
@@ -60,6 +65,9 @@ export default function FormReview({ id, onSubmit = () => { }, callabck = () => 
             })
             .catch((err) => {
                 console.error(err)
+            })
+            .finally(() => {
+                setIsLoading(false)
             })
     }
 
