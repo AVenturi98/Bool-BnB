@@ -33,7 +33,7 @@ export default function MyProperties() {
 
   if (error) {
     return (
-      <div className="container mx-auto p-4 mb-96 mt-16">
+      <div className="container mx-auto p-4 mb-96 mt-32">
         <p className="text-red-600 text-3xl text-center">Devi effettuare il login per accedere alle tue proprietà.</p>
       </div>
     );

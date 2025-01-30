@@ -8,7 +8,7 @@ export default function Card({ property }) {
   return (
     <>
       <div className="border rounded-lg p-4 shadow-md bg-white hover:shadow-xl hover:scale-105 transition-transform duration-300 ease-in-out relative">
-        <Link to={`/properties/${property.id}`}>
+        <Link to={`/properties/${property.slug}`}>
           <img
             src={property.img || placeholder}
             alt={property.title}
