@@ -47,7 +47,7 @@ export default function Navbar({ authenticated, setAuthenticated }) {
         </figure>
       </Link>
       <button
-        className="flex flex-col gap-1 cursor-pointer md:hidden group"
+        className="flex flex-col gap-1 cursor-pointer md:hidden group transition hover:-translate-y-1 hover:scale-105 delay-50"
         onClick={toggleMenu}
       >
         <span className="w-6 h-1 bg-green-600 rounded group-hover:bg-cyan-600"></span>
@@ -79,7 +79,7 @@ export default function Navbar({ authenticated, setAuthenticated }) {
               </Link>
             </li>
             <li className="relative">
-              <Accordion type="single" collapsible>
+              <Accordion type="single" collapsible className="hover:text-cyan-600">
                 <AccordionItem value="account">
                   <AccordionTrigger >
                     {ownerName} <FontAwesomeIcon icon={faUser} />

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import GoBackBtn from "./GoBackBtn";
 import GlobalContext from "@/contexts/GlobalContext";
@@ -22,6 +22,10 @@ export default function PropertiesForm() {
   const [error, setError] = useState("");
 
   const { setIsLoading } = useContext(GlobalContext)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   function handleChange(e) {
     const { value, name } = e.target;
@@ -112,7 +116,7 @@ export default function PropertiesForm() {
   }
 
   return (
-    <div className="bg-gray-100 py-5 pt-[105px]">
+    <div className="bg-gray-100 py-5 px-6 pt-[105px]">
       <div className="container mt-5">
         <GoBackBtn />
       </div>

@@ -3,12 +3,16 @@ import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import { Link } from 'react-router';
 import GlobalContext from '@/contexts/GlobalContext';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 export default function Login({ setOwnerName, authenticated, setAuthenticated }) {
   useAuth(); // Utilizza il contesto dell'autenticazione
 
   const { setIsLoading } = useContext(GlobalContext)
+
+  useEffect(() => {
+    window.scrollTo(0, 0) // Ritorna in cima alla pagina
+  }, [])
 
   const handleOnSubmit = async (e) => {
     e.preventDefault()
