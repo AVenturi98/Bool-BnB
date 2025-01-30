@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import GoBackBtn from "./GoBackBtn";
 import GlobalContext from "@/contexts/GlobalContext";
+import {useAuth} from "@/contexts/AuthContext";
 
 const initialFormData = {
   title: "",
@@ -18,6 +19,23 @@ const initialFormData = {
 };
 
 export default function PropertiesForm() {
+
+  useAuth()  // Utilizza il context per controllare se l'utente è autenticato
+  const setAuthenticated = () => {
+    if (localStorage.getItem("token") !== null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  const authenticated = setAuthenticated();
+  if (authenticated === false) {
+    return (
+      <div className="container mx-auto p-4 mb-96 mt-32">
+        <p className="text-red-600 text-3xl text-center">Devi effettuare il login per accedere a questa pagina.</p>
+      </div>
+    );
+  }
   const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState("");
 
@@ -82,7 +100,7 @@ export default function PropertiesForm() {
       return;
     }
 
-    if (formData.rooms < 1 || formData.beds < 1 || formData.bathrooms < 1 || formData.m2 < 10) {
+    if (formData.rooms < 1 || formData.beds < 1 || formData.bathrooms < 1 || formData.m2 < 1) {
       setError("I letti, stanze, bagni e m2 devono essere maggiori di 0");
       return;
     }
@@ -112,6 +130,7 @@ export default function PropertiesForm() {
       })
       .finally(() => {
         setIsLoading(false)
+        window.location.href = '/my-properties';
       })
   }
 
