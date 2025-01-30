@@ -26,6 +26,7 @@ export default function Card({ property }) {
           <p className="text-sm text-gray-700">Posti letto: {property.beds}</p>
           <div className="flex items-center gap-1 pt-5">
             <VoteStar vote={Math.round(property.avg_vote || 0)} />
+            <span className="text-muted-foreground">({property.review_count})</span>
           </div>
         </Link>
         <div className="absolute bottom-4 right-4">
