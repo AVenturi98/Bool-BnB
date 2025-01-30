@@ -260,7 +260,9 @@ function getHearts(req, res) {
 
 //Funzione per ricercare un imobile
 function search(req, res) {
-  const { city, rooms, beds } = req.query;
+  const { city, rooms, beds, building_type } = req.query; //cambiare in req.body quando si ha il frontend
+
+
 
   // Controllo dei valori di rooms e beds
   const parsedRooms = rooms ? parseInt(rooms, 10) : null;
@@ -274,19 +276,20 @@ function search(req, res) {
   }
 
   const sql = `
-        SELECT * FROM properties 
-        WHERE 
-            (city = ? OR ? IS NULL)
-            AND (rooms > ? OR ? IS NULL)
-            AND (beds > ? OR ? IS NULL);
+       SELECT * FROM properties 
+      WHERE 
+        (city = ? OR ? IS NULL)
+      AND (rooms >= ? OR ? IS NULL)
+      AND (beds >= ? OR ? IS NULL)
+      AND (building_type = ? OR ? IS NULL);
     `;
 
   const values = [
     city || null, city || null,
-    rooms, rooms,
-    beds, beds
+    parsedRooms, parsedRooms,
+    parsedBeds, parsedBeds,
+    building_type || null, building_type || null
   ];
-
   connection.query(sql, values, (err, results) => {
     if (err) {
       console.error(err);
