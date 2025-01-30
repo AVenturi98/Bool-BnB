@@ -3,9 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faTwitter, faInstagram, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
 export default function Footer() {
+
+  const widthMobile = innerWidth >= 640
+
   return (
     <footer className="bg-white text-green-600 p-5 font-sans border-t-2 border-grey-400 mt-8 py-12 font-nunito">
-      <div className="max-w-7xl mx-auto flex flex-wrap justify-between gap-5">
+      <div className={`max-w-7xl mx-auto flex flex-wrap ${widthMobile ? 'justify-between' : 'justify-around'} gap-5`}>
         {/* Descrizione */}
         <div className="flex-1 min-w-[250px]">
           <h2 className="text-green-800 mb-2 font-bold">Bool BnB</h2>
@@ -14,7 +17,7 @@ export default function Footer() {
         </div>
 
         {/* Quick Links */}
-        <div className="flex-1 min-w-[250px]">
+        <div className={widthMobile ? "flex-1 min-w-[250px]" : "flex-2"}>
           <h3 className="text-green-800 mb-2 font-bold">Link Utili</h3>
           <ul className="list-none space-y-2">
             <li>
@@ -36,7 +39,7 @@ export default function Footer() {
         </div>
 
         {/* Social Media */}
-        <div className="flex-1 min-w-[250px]">
+        <div className={widthMobile ? "flex-1 min-w-[250px]" : "flex-2"}>
           <h3 className="text-green-800 mb-2 font-bold">Seguici</h3>
           <ul className="list-none space-y-2">
             <li>

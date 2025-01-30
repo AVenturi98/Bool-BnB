@@ -90,7 +90,7 @@ export default function Show() {
         setFormReview(false)
     };
 
-
+    const imgSrc = property.img && property.img.trim() !== '' && !property.img.endsWith('/') ? property.img : defaultImg
     console.log('Property Image:', property.img);
 
 
@@ -103,15 +103,17 @@ export default function Show() {
             <div className="p-6 mt-8 lg:px-60">
                 {/* HERO */}
                 <section>
-                    <HeroShow
-                        img={property.img && property.img.trim() !== '' && !property.img.endsWith('/') ? property.img : defaultImg}
-                        room={property.rooms}
-                        bed={property.beds}
-                        bath={property.bathrooms}
-                        heart={property.hearts}
-                        title={property.title}
-                        description={property.description}
-                    />
+                    {innerWidth >= 640 ?
+                        <HeroShow
+                            img={imgSrc}
+                            room={property.rooms}
+                            bed={property.beds}
+                            bath={property.bathrooms}
+                            heart={property.hearts}
+                            title={property.title}
+                            description={property.description}
+                        /> :
+                        <img src={imgSrc} />}
                 </section>
 
                 {/* DESCRIPTION */}
@@ -191,7 +193,7 @@ export default function Show() {
                             </span>
                         </h1>
                         <div className="mt-32 mb-6 text-xl">
-                            <span className="italic opacity-60">in media votato:</span>
+                            {innerWidth >= 640 && <span className="italic opacity-60">in media votato:</span>}
                             <FontAwesomeIcon
                                 icon={
                                     property.avg_vote >= 5

@@ -46,8 +46,8 @@ export default function Navbar({ authenticated, setAuthenticated }) {
           <img src={logo} className="w-auto h-20" alt="Logo" />
         </figure>
       </Link>
-      <h1 className="text-cyan-600 font-extrabold text-4xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">Bool B&B</h1>
-      <button
+      {innerWidth >= 640 && <h1 className="text-cyan-600 font-extrabold text-4xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">Bool B&B</h1>
+      }      <button
         className="flex flex-col gap-1 cursor-pointer md:hidden group transition hover:-translate-y-1 hover:scale-105 delay-50"
         onClick={toggleMenu}
       >
