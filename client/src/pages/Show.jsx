@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import GlobalContext from "../contexts/GlobalContext.jsx";
+import { useWindowWidth } from "@/contexts/WindowContext.jsx";
 
 // Components
 import HeroShow from "../components/HeroShow";
@@ -90,8 +91,11 @@ export default function Show() {
         setFormReview(false)
     };
 
-
+    const imgSrc = property.img && property.img.trim() !== '' && !property.img.endsWith('/') ? property.img : defaultImg
     console.log('Property Image:', property.img);
+
+    const { windowWidth } = useWindowWidth();
+    const mobileWidth = windowWidth >= 640
 
 
     return (
@@ -100,18 +104,20 @@ export default function Show() {
                 <GoBackBtn />
             </div>
 
-            <div className="p-6 mt-8 lg:px-60">
+            <div className="p-6 lg:px-60">
                 {/* HERO */}
                 <section>
-                    <HeroShow
-                        img={property.img && property.img.trim() !== '' && !property.img.endsWith('/') ? property.img : defaultImg}
-                        room={property.rooms}
-                        bed={property.beds}
-                        bath={property.bathrooms}
-                        heart={property.hearts}
-                        title={property.title}
-                        description={property.description}
-                    />
+                    {innerWidth >= 640 ?
+                        <HeroShow
+                            img={imgSrc}
+                            room={property.rooms}
+                            bed={property.beds}
+                            bath={property.bathrooms}
+                            heart={property.hearts}
+                            title={property.title}
+                            description={property.description}
+                        /> :
+                        <img src={imgSrc} className="rounded-md" />}
                 </section>
 
                 {/* DESCRIPTION */}
@@ -158,8 +164,8 @@ export default function Show() {
 
                 {/* FORM CONTACT */}
                 <section>
-                    <div className="flex items-baseline m-auto py-2">
-                        <h1 className="text-2xl font-semibold mt-12">
+                    <div className="flex items-center m-auto py-2 mt-12">
+                        <h1 className="text-2xl font-semibold">
                             Hai bisogno di più informazioni?
                         </h1>
                         <Button className="bg-green-600 ml-auto hover:bg-cyan-600 transition hover:-translate-y-1 hover:scale-101 delay-100" onClick={sendmail}>Sono interessato</Button>
@@ -167,16 +173,18 @@ export default function Show() {
                     <p className="my-3 text-lg">
                         Mettiti in contatto con {owner.name}, il proprietario di casa
                     </p>
-                    <div className="text-lg my-3">
-                        {owner.name} :{" "}
-                        <span className="text-lg mx-24 italic">
+                    <div className="flex items-baseline gap-5">
+                        <div className="text-lg my-3">
+                            {owner.name} :{" "}
+                        </div>
+                        <div className={`text-lg ${mobileWidth ? 'mx-24' : ''} italic`}>
                             <button
                                 type="button"
                                 className="cursor-pointer hover:underline hover:text-green-700"
                             >
                                 {owner.owner_email}
                             </button>
-                        </span>
+                        </div>
                     </div>
                     <MailForm />
                 </section>
@@ -191,7 +199,7 @@ export default function Show() {
                             </span>
                         </h1>
                         <div className="mt-32 mb-6 text-xl">
-                            <span className="italic opacity-60">in media votato:</span>
+                            {innerWidth >= 640 && <span className="italic opacity-60">in media votato:</span>}
                             <FontAwesomeIcon
                                 icon={
                                     property.avg_vote >= 5
@@ -235,7 +243,7 @@ export default function Show() {
                         review.map((element) => (
                             <div
                                 key={element.id}
-                                className="py-12 sm:py-0 px-32 sm:px-0 flex justify-center items-center border-t-2 border-green-500"
+                                className="py-12 sm:py-0 sm:px-32 flex justify-center items-center border-t-2 border-green-500"
                             >
                                 <div className="relative isolate overflow-hidden bg-white grow">
                                     <div className="mx-auto max-w-2xl lg:max-w-4xl">
