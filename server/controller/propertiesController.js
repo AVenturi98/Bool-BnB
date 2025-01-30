@@ -5,7 +5,9 @@ const jwt = require("jsonwebtoken");
 function index(req, res) {
   // Query SQL per ottenere le proprietà e il voto medio
   const sql = `
-    SELECT properties.*, AVG(reviews.vote) AS avg_vote
+    SELECT properties.*, 
+      AVG(reviews.vote) AS avg_vote,
+      COUNT(reviews.id) AS review_count
     FROM properties
     LEFT JOIN reviews ON properties.id = reviews.property_id
     GROUP BY properties.id
@@ -37,12 +39,15 @@ function myProperties(req, res) {
     const decoded = jwt.verify(token, SECRET_KEY); // Decodifica il token
     const ownerID = decoded.id; // Estrai l'ID del proprietario dal token
 
-    const sql = `  SELECT properties.*, AVG(reviews.vote) AS avg_vote
-  FROM properties
-  LEFT JOIN reviews ON properties.id = reviews.property_id
-  WHERE properties.owner_id = ?
-  GROUP BY properties.id
-  ORDER BY properties.hearts DESC`;
+    const sql = `  SELECT properties.*, 
+      AVG(reviews.vote) AS avg_vote,
+      COUNT(reviews.id) AS review_count
+    FROM properties
+    LEFT JOIN reviews ON properties.id = reviews.property_id
+    WHERE properties.owner_id = ?
+    GROUP BY properties.id
+    ORDER BY properties.hearts DESC`;
+
     connection.query(sql, [ownerID], (err, properties) => {
       if (err) {
         console.error('Errore nella query:', err);
@@ -228,83 +233,83 @@ function storeReview(req, res) {
   })
 }
 
-  const SECRET_KEY = "10"; // Usa una chiave sicura in produzione
+const SECRET_KEY = "10"; // Usa una chiave sicura in produzione
 
-  function login(req, res) {
-    const { email, password } = req.body;
+function login(req, res) {
+  const { email, password } = req.body;
 
-    // Query per ottenere l'utente dal database
-    const query = 'SELECT * FROM owners WHERE email = ? AND password = ?';
-    connection.query(query, [email, password], (err, results) => {
-      if (err) {
-        return res.status(500).send('Errore del server');
-      }
-
-      if (results.length === 0) {
-        return res.status(401).send('Email o password non corretti');
-      }
-
-      const owner = results[0]
-      const ownerName = owner.name;
-
-      // Genera il token JWT
-      const token = jwt.sign({ id: owner.id, email: owner.email, ownerName: owner.name }, SECRET_KEY, { expiresIn: "5h" });
-
-      res.status(200).json({ token, ownerName });
-    });
-  };
-
-  //Funzione per salvare i cuori
-  function storeHearts(req, res) {
-    const id = req.params.id;
-    const { hearts } = req.body;
-
-    const query = 'UPDATE `bool_bnb_db`.`properties` SET `hearts` = ? WHERE `id` = ?';
-
-    connection.query(query, [hearts, id], (err, results) => {
-      if (err) {
-        console.error('Errore nella query:', err);
-        return res.status(500).json({ message: 'Errore recupero dati dal contatore' });
-      }
-      res.status(200).json({ message: 'Contatore aggiornato con successo!' });
-    });
-  }
-
-  //Funzione per ricontare i cuori e metterli in ordine
-  function getHearts(req, res) {
-    const id = parseInt(req.params.id);
-    const sql = 'SELECT hearts FROM properties WHERE id = ?';
-
-    connection.query(sql, [id], (err, results) => {
-      if (err) {
-        return res.status(500).json({ message: 'Errore nel recupero dei cuori' });
-      }
-      if (results.length === 0) {
-        return res.status(404).json({ message: 'Proprietà non trovata' });
-      }
-      res.json({ hearts: results[0].hearts });
-    });
-  }
-
-
-  //Funzione per ricercare un imobile
-  function search(req, res) {
-    const { city, rooms, beds, building_type } = req.query; //cambiare in req.body quando si ha il frontend
-
-
-
-    // Controllo dei valori di rooms e beds
-    const parsedRooms = rooms ? parseInt(rooms, 10) : null;
-    const parsedBeds = beds ? parseInt(beds, 10) : null;
-
-    if (
-      isNaN(parsedRooms) || parsedRooms < 0 ||
-      isNaN(parsedBeds) || parsedBeds < 0
-    ) {
-      return res.status(400).send({ message: 'Le stanze o i letti devono numeri e maggiori di 0 ' })
+  // Query per ottenere l'utente dal database
+  const query = 'SELECT * FROM owners WHERE email = ? AND password = ?';
+  connection.query(query, [email, password], (err, results) => {
+    if (err) {
+      return res.status(500).send('Errore del server');
     }
 
-    const sql = `
+    if (results.length === 0) {
+      return res.status(401).send('Email o password non corretti');
+    }
+
+    const owner = results[0]
+    const ownerName = owner.name;
+
+    // Genera il token JWT
+    const token = jwt.sign({ id: owner.id, email: owner.email, ownerName: owner.name }, SECRET_KEY, { expiresIn: "5h" });
+
+    res.status(200).json({ token, ownerName });
+  });
+};
+
+//Funzione per salvare i cuori
+function storeHearts(req, res) {
+  const id = req.params.id;
+  const { hearts } = req.body;
+
+  const query = 'UPDATE `bool_bnb_db`.`properties` SET `hearts` = ? WHERE `id` = ?';
+
+  connection.query(query, [hearts, id], (err, results) => {
+    if (err) {
+      console.error('Errore nella query:', err);
+      return res.status(500).json({ message: 'Errore recupero dati dal contatore' });
+    }
+    res.status(200).json({ message: 'Contatore aggiornato con successo!' });
+  });
+}
+
+//Funzione per ricontare i cuori e metterli in ordine
+function getHearts(req, res) {
+  const id = parseInt(req.params.id);
+  const sql = 'SELECT hearts FROM properties WHERE id = ?';
+
+  connection.query(sql, [id], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Errore nel recupero dei cuori' });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'Proprietà non trovata' });
+    }
+    res.json({ hearts: results[0].hearts });
+  });
+}
+
+
+//Funzione per ricercare un imobile
+function search(req, res) {
+  const { city, rooms, beds, building_type } = req.query; //cambiare in req.body quando si ha il frontend
+
+
+
+  // Controllo dei valori di rooms e beds
+  const parsedRooms = rooms ? parseInt(rooms, 10) : null;
+  const parsedBeds = beds ? parseInt(beds, 10) : null;
+
+  if (
+    isNaN(parsedRooms) || parsedRooms < 0 ||
+    isNaN(parsedBeds) || parsedBeds < 0
+  ) {
+    return res.status(400).send({ message: 'Le stanze o i letti devono numeri e maggiori di 0 ' })
+  }
+
+  const sql = `
        SELECT * FROM properties 
       WHERE 
         (city = ? OR ? IS NULL)
@@ -313,23 +318,23 @@ function storeReview(req, res) {
       AND (building_type = ? OR ? IS NULL);
     `;
 
-    const values = [
-      city || null, city || null,
-      parsedRooms, parsedRooms,
-      parsedBeds, parsedBeds,
-      building_type || null, building_type || null
-    ];
-    connection.query(sql, values, (err, results) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).json({ message: "Errore nel recupero delle proprietà" });
-      }
-      if (results.length === 0) {
-        return res.status(404).json({ message: "Proprietà non trovata" });
-      }
+  const values = [
+    city || null, city || null,
+    parsedRooms, parsedRooms,
+    parsedBeds, parsedBeds,
+    building_type || null, building_type || null
+  ];
+  connection.query(sql, values, (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Errore nel recupero delle proprietà" });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ message: "Proprietà non trovata" });
+    }
 
-      res.json(results);
-    });
-  };
+    res.json(results);
+  });
+};
 
-  module.exports = { index, show, storeReview, storeProperty, login, storeHearts, getHearts, myProperties, search }
+module.exports = { index, show, storeReview, storeProperty, login, storeHearts, getHearts, myProperties, search }
