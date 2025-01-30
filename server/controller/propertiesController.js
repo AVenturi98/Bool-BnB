@@ -292,38 +292,40 @@ function getHearts(req, res) {
 }
 
 
-//Funzione per ricercare un imobile
 function search(req, res) {
-  const { city, rooms, beds, building_type } = req.query; //cambiare in req.body quando si ha il frontend
+  const { city, rooms, beds, building_type } = req.query;
 
-
-
-  // Controllo dei valori di rooms e beds
   const parsedRooms = rooms ? parseInt(rooms, 10) : null;
   const parsedBeds = beds ? parseInt(beds, 10) : null;
 
+  // Controllo dei valori di rooms e beds
   if (
-    isNaN(parsedRooms) || parsedRooms < 0 ||
-    isNaN(parsedBeds) || parsedBeds < 0
+    (rooms && isNaN(parsedRooms)) || parsedRooms < 0 ||
+    (beds && isNaN(parsedBeds)) || parsedBeds < 0
   ) {
-    return res.status(400).send({ message: 'Le stanze o i letti devono numeri e maggiori di 0 ' })
+    return res.status(400).send({ message: 'Le stanze e i letti devono essere numeri maggiori di 0.' });
   }
 
   const sql = `
-       SELECT * FROM properties 
-      WHERE 
-        (city = ? OR ? IS NULL)
-      AND (rooms >= ? OR ? IS NULL)
-      AND (beds >= ? OR ? IS NULL)
-      AND (building_type = ? OR ? IS NULL);
-    `;
+    SELECT * FROM properties 
+    WHERE 
+      (city LIKE ? OR ? IS NULL)
+    AND (rooms >= ? OR ? IS NULL)
+    AND (beds >= ? OR ? IS NULL)
+    AND (building_type LIKE ? OR ? IS NULL);
+  `;
 
   const values = [
-    city || null, city || null,
+    `%${city || ''}%`, city || null,
     parsedRooms, parsedRooms,
     parsedBeds, parsedBeds,
-    building_type || null, building_type || null
+    `%${building_type || ''}%`, building_type || null
   ];
+
+  // Log della query SQL e dei valori
+  console.log("Esecuzione della query:", sql);
+  console.log("Valori per la query:", values);
+
   connection.query(sql, values, (err, results) => {
     if (err) {
       console.error(err);
@@ -335,6 +337,6 @@ function search(req, res) {
 
     res.json(results);
   });
-};
+}
 
 module.exports = { index, show, storeReview, storeProperty, login, storeHearts, getHearts, myProperties, search }

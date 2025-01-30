@@ -12,6 +12,7 @@ import PropertiesList from './components/PropertiesList'
 import MyProperties from './components/MyProperties'
 import { GlobalProvider } from './contexts/GlobalContext'
 import { WindowProvider } from './contexts/WindowContext'
+import Search from './components/Search'
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
                 <Route path='/my-properties' element={<MyProperties />} />
                 <Route path='/properties/:id' element={<Show />} />
                 <Route path='/mail' element={<MailForm />} />
+                {/* <Route path='/ricerca' element={<Search />} /> */}
                 <Route path='/properties' element={<PropertiesForm />} />
                 <Route path='/login' element={<Login setOwnerName={setOwnerName} authenticated={authenticated} setAuthenticated={setAuthenticated} />} />
               </Route>

@@ -3,6 +3,7 @@ import axios from "axios";
 import Card from "./Card";
 import Hero from "./Hero.jsx";
 import GlobalContext from "../contexts/GlobalContext";
+import Search from "./Search";
 
 export default function PropertiesList() {
   const [properties, setProperties] = useState([]);
@@ -39,6 +40,7 @@ export default function PropertiesList() {
     <>
       <div>
         <Hero />
+        <Search />
       </div>
       <div className="container mx-auto p-4">
         <h1 className="text-2xl font-bold text-green-700 mb-4">Immobili</h1>
