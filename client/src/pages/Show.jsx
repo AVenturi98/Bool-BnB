@@ -93,6 +93,8 @@ export default function Show() {
     const imgSrc = property.img && property.img.trim() !== '' && !property.img.endsWith('/') ? property.img : defaultImg
     console.log('Property Image:', property.img);
 
+    const mobileWidth = window.innerWidth >= 640
+
 
     return (
         <>
@@ -100,7 +102,7 @@ export default function Show() {
                 <GoBackBtn />
             </div>
 
-            <div className="p-6 mt-8 lg:px-60">
+            <div className="p-6 lg:px-60">
                 {/* HERO */}
                 <section>
                     {innerWidth >= 640 ?
@@ -113,7 +115,7 @@ export default function Show() {
                             title={property.title}
                             description={property.description}
                         /> :
-                        <img src={imgSrc} />}
+                        <img src={imgSrc} className="rounded-md" />}
                 </section>
 
                 {/* DESCRIPTION */}
@@ -160,8 +162,8 @@ export default function Show() {
 
                 {/* FORM CONTACT */}
                 <section>
-                    <div className="flex items-baseline m-auto py-2">
-                        <h1 className="text-2xl font-semibold mt-12">
+                    <div className="flex items-center m-auto py-2 mt-12">
+                        <h1 className="text-2xl font-semibold">
                             Hai bisogno di più informazioni?
                         </h1>
                         <Button className="bg-green-600 ml-auto hover:bg-cyan-600 transition hover:-translate-y-1 hover:scale-101 delay-100" onClick={sendmail}>Sono interessato</Button>
@@ -169,16 +171,18 @@ export default function Show() {
                     <p className="my-3 text-lg">
                         Mettiti in contatto con {owner.name}, il proprietario di casa
                     </p>
-                    <div className="text-lg my-3">
-                        {owner.name} :{" "}
-                        <span className="text-lg mx-24 italic">
+                    <div className="flex items-baseline gap-5">
+                        <div className="text-lg my-3">
+                            {owner.name} :{" "}
+                        </div>
+                        <div className={`text-lg ${mobileWidth ? 'mx-24' : ''} italic`}>
                             <button
                                 type="button"
                                 className="cursor-pointer hover:underline hover:text-green-700"
                             >
                                 {owner.owner_email}
                             </button>
-                        </span>
+                        </div>
                     </div>
                     <MailForm />
                 </section>

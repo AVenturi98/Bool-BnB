@@ -2,7 +2,8 @@ import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import GoBackBtn from "./GoBackBtn";
 import GlobalContext from "@/contexts/GlobalContext";
-import {useAuth} from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";
+import { useWindowWidth } from "@/contexts/WindowContext";
 
 const initialFormData = {
   title: "",
@@ -132,7 +133,12 @@ export default function PropertiesForm() {
         setIsLoading(false)
         window.location.href = '/my-properties';
       })
+
   }
+
+  // Response Mobile
+  const { windowWidth } = useWindowWidth();
+  const mobileWidth = windowWidth <= 640 ? 'col-start-1 col-end-3' : 'mb-4';
 
   return (
     <div className="bg-gray-100 py-5 px-6 pt-[105px]">
@@ -149,7 +155,7 @@ export default function PropertiesForm() {
           </h1>
 
           {/* Colonna 1 */}
-          <div className="mb-4">
+          <div className={mobileWidth} >
             <label htmlFor="title" className="block text-sm font-medium text-gray-700">
               Nome dell'appartamento*
             </label>
@@ -165,7 +171,7 @@ export default function PropertiesForm() {
             />
           </div>
 
-          <div className="mb-4">
+          <div className={mobileWidth}>
             <label htmlFor="rooms" className="block text-sm font-medium text-gray-700">
               Numero di stanze*
             </label>
@@ -180,7 +186,7 @@ export default function PropertiesForm() {
             />
           </div>
 
-          <div className="mb-4">
+          <div className={mobileWidth}>
             <label htmlFor="beds" className="block text-sm font-medium text-gray-700">
               Numero di letti*
             </label>
@@ -195,7 +201,7 @@ export default function PropertiesForm() {
             />
           </div>
 
-          <div className="mb-4">
+          <div className={mobileWidth}>
             <label htmlFor="bathrooms" className="block text-sm font-medium text-gray-700">
               Numero di bagni*
             </label>
@@ -210,7 +216,7 @@ export default function PropertiesForm() {
             />
           </div>
 
-          <div className="mb-4">
+          <div className={mobileWidth}>
             <label htmlFor="m2" className="block text-sm font-medium text-gray-700">
               Grandezza (m²)*
             </label>
@@ -226,7 +232,7 @@ export default function PropertiesForm() {
           </div>
 
           {/* Colonna 2 */}
-          <div className="mb-4">
+          <div className={mobileWidth}>
             <label htmlFor="address" className="block text-sm font-medium text-gray-700">
               Indirizzo*
             </label>
@@ -242,7 +248,7 @@ export default function PropertiesForm() {
             />
           </div>
 
-          <div className="mb-4">
+          <div className={mobileWidth}>
             <label htmlFor="city" className="block text-sm font-medium text-gray-700">
               Città*
             </label>
@@ -258,7 +264,7 @@ export default function PropertiesForm() {
             />
           </div>
 
-          <div className="mb-4">
+          <div className={mobileWidth}>
             <label htmlFor="building_type" className="block text-sm font-medium text-gray-700">
               Tipo di costruzione
             </label>
@@ -273,7 +279,7 @@ export default function PropertiesForm() {
             />
           </div>
 
-          <div className="mb-4">
+          <div className={mobileWidth}>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email*
             </label>
@@ -289,7 +295,7 @@ export default function PropertiesForm() {
             />
           </div>
 
-          <div className="mb-4">
+          <div className={mobileWidth}>
             <label htmlFor="img" className="block text-sm font-medium text-gray-700">
               URL immagine
             </label>
@@ -328,7 +334,7 @@ export default function PropertiesForm() {
             Invia
           </button>
         </form>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
