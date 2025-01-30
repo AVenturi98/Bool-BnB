@@ -27,7 +27,8 @@ export default function PropertiesList() {
       })
       .finally(() => {
         setIsLoading(false)
-      });
+      })
+    window.scrollTo(0, 0)
   }, []);
 
   if (error) {
