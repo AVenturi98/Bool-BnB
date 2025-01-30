@@ -41,13 +41,17 @@ export default function Show() {
     const { id } = useParams()
 
     const sendmail = () => {
+
+        setIsLoading(true)
+
         axios
             .post("http://localhost:3000/send-mail")
             .then((res) => {
-                console.log(res.data);
+                console.log(res.data)
             })
-            .catch((err) => console.error(err.message));
-    };
+            .catch((err) => console.error(err.message))
+            .finally(() => { setIsLoading(false) })
+    }
 
 
     const fetchPost = () => {
@@ -92,7 +96,7 @@ export default function Show() {
 
     return (
         <>
-            <div className="container mt-5 pt-[105px]">
+            <div className="container mt-5 pt-[105px] px-6">
                 <GoBackBtn />
             </div>
 
@@ -131,7 +135,7 @@ export default function Show() {
                     </div>
 
                     {/* BADGE */}
-                    <div className="flex justify-around items-center py-8">
+                    <div className="py-8 grid grid-cols-2 md:grid-cols-4 gap-4 justify-center">
                         {[
                             { label: "Stanze", value: property.rooms, icon: faSink },
                             { label: "Bagni", value: property.bathrooms, icon: faPersonBooth },
@@ -140,14 +144,12 @@ export default function Show() {
                         ].map(({ label, value, icon }, index) => (
                             <div
                                 key={index}
-                                className="border border-green-500 py-3 px-5 w-1/5 rounded-md bg-green-50"
+                                className="border border-green-500 py-3 px-5 rounded-md bg-green-50 text-center max-w-[150px] w-full mx-auto"
                             >
-                                <h1 className="font-extrabold text-lg text-green-600/100">
-                                    {label}
-                                </h1>
-                                <div className="font-bold">
+                                <h1 className="font-extrabold text-lg text-green-600">{label}</h1>
+                                <div className="font-bold flex items-center justify-center gap-2">
                                     <FontAwesomeIcon icon={icon} style={{ color: "#04f153" }} />
-                                    <span> {value}</span>
+                                    <span>{value}</span>
                                 </div>
                             </div>
                         ))}
@@ -211,7 +213,7 @@ export default function Show() {
                             type="button"
                             id="openForm"
                             onClick={openForm}
-                            className="mb-6 bg-green-600 rounded-md py-1.5 px-3 font-medium text-white hover:bg-cyan-600"
+                            className="mb-6 bg-green-600 rounded-md py-1.5 px-3 font-medium text-white hover:bg-cyan-600 transition hover:-translate-y-1 hover:scale-105 delay-50"
                         >
                             + Aggiungi una recensione
                         </button> :
@@ -219,7 +221,7 @@ export default function Show() {
                             type="button"
                             id="closeForm"
                             onClick={closeForm}
-                            className="mb-6 bg-green-600 rounded-md py-1.5 px-3 font-medium text-white hover:bg-cyan-600"
+                            className="mb-6 bg-green-600 rounded-md py-1.5 px-3 font-medium text-white hover:bg-cyan-600 transition hover:-translate-y-1 hover:scale-105 delay-50"
                         >
                             - Chiudi finestra
                         </button>}
@@ -245,8 +247,8 @@ export default function Show() {
                                             </div>
                                             <img src={greenLogo} className="h-20" alt="logo" />
                                         </div>
-                                        <div className="p-1 my-3 w-[200px] border border-green-500 rounded-xs bg-green-50 flex gap-2">
-                                            permanenza: <b>{element.days}</b>{" "}
+                                        <div className="p-1 my-3 max-w-[200px] w-full border border-green-500 rounded-md bg-green-50 flex gap-2 justify-center items-center flex-wrap text-center">
+                                            <span>permanenza:</span> <b>{element.days}</b>
                                             <span className="italic text-gray-400">giorni</span>
                                         </div>
                                         <blockquote className="text-xl font-semibold text-gray-900">
