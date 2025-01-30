@@ -237,7 +237,7 @@ export default function Show() {
                         review.map((element) => (
                             <div
                                 key={element.id}
-                                className="py-12 sm:py-0 px-32 sm:px-0 flex justify-center items-center border-t-2 border-green-500"
+                                className="py-12 sm:py-0 sm:px-32 flex justify-center items-center border-t-2 border-green-500"
                             >
                                 <div className="relative isolate overflow-hidden bg-white grow">
                                     <div className="mx-auto max-w-2xl lg:max-w-4xl">
