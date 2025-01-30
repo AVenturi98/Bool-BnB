@@ -72,58 +72,58 @@ function show(req, res) {
 
     const id = results[0].id
 
-  
-  const sql = `
+
+    const sql = `
           SELECT *
           FROM properties
           WHERE properties.id = ?
           `
 
-  connection.query(sql, [id], (err, results) => {
-    if (err) return res.status(500).json({ message: err.message })
-    if (results.length === 0) return res.status(404).json({ message: 'BnB not found' })
+    connection.query(sql, [id], (err, results) => {
+      if (err) return res.status(500).json({ message: err.message })
+      if (results.length === 0) return res.status(404).json({ message: 'BnB not found' })
 
-    const bnb = results[0]
+      const bnb = results[0]
 
 
-    // Controlla se l'URL dell'immagine è già completo
-    if (bnb.img && !bnb.img.startsWith('http')) {
-      bnb.img = `${process.env.BE_HOST}/properties/${bnb.img}`;
-    }
+      // Controlla se l'URL dell'immagine è già completo
+      if (bnb.img && !bnb.img.startsWith('http')) {
+        bnb.img = `${process.env.BE_HOST}/properties/${bnb.img}`;
+      }
 
-    const sql = `SELECT *, date_format(reviews.date, '%d-%m-%Y') as date_it
+      const sql = `SELECT *, date_format(reviews.date, '%d-%m-%Y') as date_it
      FROM reviews WHERE property_id = ? 
      ORDER BY reviews.id DESC`
 
-    connection.query(sql, [id], (err, results) => {
-      if (err) return res.status(500).json({ message: err.message })
-
-      bnb.reviews = results
-
-      const sql_avg = `SELECT FLOOR(AVG(vote)) as avg_vote FROM reviews WHERE property_id = ?`
-
-      connection.query(sql_avg, [id], (err, results) => {
+      connection.query(sql, [id], (err, results) => {
         if (err) return res.status(500).json({ message: err.message })
 
-        bnb.avg_vote = results[0].avg_vote
-      })
+        bnb.reviews = results
+
+        const sql_avg = `SELECT FLOOR(AVG(vote)) as avg_vote FROM reviews WHERE property_id = ?`
+
+        connection.query(sql_avg, [id], (err, results) => {
+          if (err) return res.status(500).json({ message: err.message })
+
+          bnb.avg_vote = results[0].avg_vote
+        })
 
 
-      const sql_owner = `
+        const sql_owner = `
           SELECT owners.name AS 'name', owners.email as owner_email
           FROM properties
           JOIN owners ON owners.id = properties.owner_id AND properties.id = ?
       `
-      connection.query(sql_owner, [id], (err, result) => {
-        if (err) return res.status(500).json({ message: err.message })
+        connection.query(sql_owner, [id], (err, result) => {
+          if (err) return res.status(500).json({ message: err.message })
 
-        bnb.owner = result
+          bnb.owner = result
 
-        res.json(bnb)
+          res.json(bnb)
+        })
       })
     })
   })
-})
 }
 
 //Funzione per aggiungere proprietà
@@ -170,29 +170,35 @@ function storeProperty(req, res) {
 
     const slug = slugify(title);
 
-      const sql_post = `
+    const sql_post = `
       INSERT INTO properties (title, slug, rooms, beds, bathrooms, m2, address, city, building_type, email, img, owner_id, description)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
-      connection.query(sql_post, [title, slug, rooms, beds, bathrooms, m2, address, city, building_type, email, finalImg, ownerID, description], (err, newProp) => {
-        if (err) {
-          console.error('Database query failed:', err.stack);
-          return res.status(500).json({ message: 'Database query failed' });
-        }
-        res.status(201).json({ message: 'Proprietà aggiunta' });
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(401).json({ message: "Token non valido o scaduto" });
-    }
+    connection.query(sql_post, [title, slug, rooms, beds, bathrooms, m2, address, city, building_type, email, finalImg, ownerID, description], (err, newProp) => {
+      if (err) {
+        console.error('Database query failed:', err.stack);
+        return res.status(500).json({ message: 'Database query failed' });
+      }
+      res.status(201).json({ message: 'Proprietà aggiunta' });
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(401).json({ message: "Token non valido o scaduto" });
   }
+}
 
 //funzione per aggiungere recensioni
 function storeReview(req, res) {
-    const { text, name, days, vote } = req.body
+  const { text, name, days, vote } = req.body
 
-    const id = req.params.id
+  const slug = req.params.id
+  const sql_id = `SELECT id FROM properties WHERE slug = ?`
+  connection.query(sql_id, [slug], (err, results) => {
+    if (err) return res.status(500).json({ message: err.message })
+    if (results.length === 0) return res.status(404).json({ message: 'BnB not found' })
+
+    const id = results[0].id
 
     if (
       !days || isNaN(days) || days < 0 || days > 365 ||
@@ -219,7 +225,8 @@ function storeReview(req, res) {
       res.status(201).json({ message: 'Recensione aggiunta' })
     })
 
-  }
+  })
+}
 
   const SECRET_KEY = "10"; // Usa una chiave sicura in produzione
 
@@ -280,9 +287,9 @@ function storeReview(req, res) {
   }
 
 
-//Funzione per ricercare un imobile
-function search(req, res) {
-  const { city, rooms, beds, building_type } = req.query; //cambiare in req.body quando si ha il frontend
+  //Funzione per ricercare un imobile
+  function search(req, res) {
+    const { city, rooms, beds, building_type } = req.query; //cambiare in req.body quando si ha il frontend
 
 
 
@@ -297,7 +304,7 @@ function search(req, res) {
       return res.status(400).send({ message: 'Le stanze o i letti devono numeri e maggiori di 0 ' })
     }
 
-  const sql = `
+    const sql = `
        SELECT * FROM properties 
       WHERE 
         (city = ? OR ? IS NULL)
@@ -306,20 +313,20 @@ function search(req, res) {
       AND (building_type = ? OR ? IS NULL);
     `;
 
-  const values = [
-    city || null, city || null,
-    parsedRooms, parsedRooms,
-    parsedBeds, parsedBeds,
-    building_type || null, building_type || null
-  ];
-  connection.query(sql, values, (err, results) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Errore nel recupero delle proprietà" });
-    }
-    if (results.length === 0) {
-      return res.status(404).json({ message: "Proprietà non trovata" });
-    }
+    const values = [
+      city || null, city || null,
+      parsedRooms, parsedRooms,
+      parsedBeds, parsedBeds,
+      building_type || null, building_type || null
+    ];
+    connection.query(sql, values, (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ message: "Errore nel recupero delle proprietà" });
+      }
+      if (results.length === 0) {
+        return res.status(404).json({ message: "Proprietà non trovata" });
+      }
 
       res.json(results);
     });
