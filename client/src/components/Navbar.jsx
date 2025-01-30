@@ -6,6 +6,7 @@ import { faHouse } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { useAuth } from "@/contexts/AuthContext";
+import { useWindowWidth } from "@/contexts/WindowContext";
 
 
 
@@ -13,8 +14,6 @@ export default function Navbar({ authenticated, setAuthenticated }) {
   useAuth(); // Utilizza il contesto dell'autenticazione
   const [menuOpen, setMenuOpen] = useState(false);
   const ownerName = localStorage.getItem("ownerName");
-
-
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -38,6 +37,10 @@ export default function Navbar({ authenticated, setAuthenticated }) {
     // Aggiorna lo stato
   };
 
+  // Response Mobile
+  const { windowWidth } = useWindowWidth();
+  const mobileWidth = windowWidth >= 640
+
 
   return (
     <nav className="bg-white text-green-600 flex justify-between items-center px-8 border-b border-gray-200 shadow-sm relative z-10 w-full">
@@ -46,7 +49,7 @@ export default function Navbar({ authenticated, setAuthenticated }) {
           <img src={logo} className="w-auto h-20" alt="Logo" />
         </figure>
       </Link>
-      {innerWidth >= 640 && <h1 className="text-cyan-600 font-extrabold text-4xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">Bool B&B</h1>
+      {mobileWidth && <h1 className="text-cyan-600 font-extrabold text-4xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">Bool B&B</h1>
       }      <button
         className="flex flex-col gap-1 cursor-pointer md:hidden group transition hover:-translate-y-1 hover:scale-105 delay-50"
         onClick={toggleMenu}

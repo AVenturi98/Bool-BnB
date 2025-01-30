@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router";
 import axios from "axios";
 import GlobalContext from "../contexts/GlobalContext.jsx";
+import { useWindowWidth } from "@/contexts/WindowContext.jsx";
 
 // Components
 import HeroShow from "../components/HeroShow";
@@ -93,7 +94,8 @@ export default function Show() {
     const imgSrc = property.img && property.img.trim() !== '' && !property.img.endsWith('/') ? property.img : defaultImg
     console.log('Property Image:', property.img);
 
-    const mobileWidth = window.innerWidth >= 640
+    const { windowWidth } = useWindowWidth();
+    const mobileWidth = windowWidth >= 640
 
 
     return (

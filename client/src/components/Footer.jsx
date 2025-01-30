@@ -1,10 +1,13 @@
 import React from "react";
+import { useWindowWidth } from "@/contexts/WindowContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebook, faTwitter, faInstagram, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 
 export default function Footer() {
 
-  const widthMobile = innerWidth >= 640
+  const { windowWidth } = useWindowWidth();
+
+  const widthMobile = windowWidth >= 640
 
   return (
     <footer className="bg-white text-green-600 p-5 font-sans border-t-2 border-grey-400 mt-8 py-12 font-nunito">

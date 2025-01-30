@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import BtnTop from '@/components/BtnTop';
 
 const WindowContext = createContext();
 
@@ -20,6 +21,7 @@ export const WindowProvider = ({ children }) => {
     return (
         <WindowContext.Provider value={{ windowWidth }}>
             {children}
+            <BtnTop />
         </WindowContext.Provider>
     );
 };

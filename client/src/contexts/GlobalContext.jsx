@@ -1,5 +1,4 @@
 import { createContext, useState } from "react"
-import BtnTop from '../components/BtnTop'
 
 
 const GlobalContext = createContext()
@@ -11,7 +10,6 @@ export function GlobalProvider({ children }) {
     return (
         <GlobalContext.Provider value={{ isLoading, setIsLoading }}>
             {children}
-            <BtnTop />
         </GlobalContext.Provider>
     )
 }
