@@ -39,7 +39,7 @@ export default function Navbar({ authenticated, setAuthenticated }) {
 
   // Response Mobile
   const { windowWidth } = useWindowWidth();
-  const mobileWidth = windowWidth >= 640
+  const mobileWidth = windowWidth >= 1024
 
 
   return (
