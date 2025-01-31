@@ -96,13 +96,14 @@ export default function Show() {
     const imgSrc = property.img && property.img.trim() !== '' && !property.img.endsWith('/') ? property.img : defaultImg
     console.log('Property Image:', property.img);
 
+    // Response Mobile Width
     const { windowWidth } = useWindowWidth();
     const mobileWidth = windowWidth >= 640
 
 
     return (
         <>
-            <div className="container mt-5 pt-[105px] px-6">
+            <div className={`container mt-5 ${mobileWidth ? `pt-[105px]` : 'pt-5'} px-6`}>
                 <GoBackBtn />
             </div>
 

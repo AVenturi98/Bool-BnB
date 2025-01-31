@@ -71,10 +71,8 @@ export default function Navbar({ authenticated, setAuthenticated }) {
           </li>
         </Link>
         <Link to='/ricerca'>
-          <li>
-            <a className="hover:text-cyan-600 transition-colors duration-200">
+          <li className="hover:text-cyan-600 transition-colors duration-200">
               Ricerca
-            </a>
           </li>
         </Link>
         {authenticated ? (
