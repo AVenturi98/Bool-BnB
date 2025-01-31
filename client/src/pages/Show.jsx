@@ -103,7 +103,7 @@ export default function Show() {
 
     return (
         <>
-            <div className="container mt-5 pt-[105px] px-6">
+            <div className={`container mt-5 ${mobileWidth ? `pt-[105px]` : 'pt-5'} px-6`}>
                 <GoBackBtn />
             </div>
 
