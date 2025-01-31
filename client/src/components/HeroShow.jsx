@@ -48,25 +48,25 @@ export default function Example({ img, room, bed, bath, heart, title, descriptio
                     <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">
 
                         <div className="flex flex-col-reverse gap-1">
-                            <dt className="text-base/7 text-gray-300">Rooms</dt>
+                            <dt className="text-base/7 text-gray-300">Camere</dt>
                             <dd className="text-4xl font-semibold tracking-tight text-white">
                                 <div className="font-bold"><FontAwesomeIcon icon={faSink} style={{ color: "#c1cfe6", }} /><span> {room}</span></div>
                             </dd>
                         </div>
                         <div className="flex flex-col-reverse gap-1">
-                            <dt className="text-base/7 text-gray-300">Beds</dt>
+                            <dt className="text-base/7 text-gray-300">Posti letto</dt>
                             <dd className="text-4xl font-semibold tracking-tight text-white">
                                 <div className="font-bold"><FontAwesomeIcon icon={faBed} style={{ color: "#c1cfe6", }} /><span> {bed}</span></div>
                             </dd>
                         </div>
                         <div className="flex flex-col-reverse gap-1">
-                            <dt className="text-base/7 text-gray-300">Bathrooms</dt>
+                            <dt className="text-base/7 text-gray-300">Bagni</dt>
                             <dd className="text-4xl font-semibold tracking-tight text-white">
                                 <div className="font-bold"><FontAwesomeIcon icon={faRestroom} style={{ color: "#c1cfe6", }} /><span> {bath}</span></div>
                             </dd>
                         </div>
                         <div className="flex flex-col-reverse gap-1 animate__backInLeft">
-                            <dt className="text-base/7 text-gray-300">Loved</dt>
+                            <dt className="text-base/7 text-gray-300">Preferito</dt>
                             <dd className="text-4xl font-semibold tracking-tight text-white">
                                 <div className="font-bold"><FontAwesomeIcon icon={faHeart} style={{ color: "#c1cfe6", }} /><span> {heart}</span></div>
                             </dd>

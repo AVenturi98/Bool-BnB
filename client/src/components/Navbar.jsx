@@ -70,11 +70,13 @@ export default function Navbar({ authenticated, setAuthenticated }) {
             Home <FontAwesomeIcon icon={faHouse} />
           </li>
         </Link>
-        <li>
-          <a className="hover:text-cyan-600 transition-colors duration-200">
-            About
-          </a>
-        </li>
+        <Link to='/ricerca'>
+          <li>
+            <a className="hover:text-cyan-600 transition-colors duration-200">
+              Ricerca
+            </a>
+          </li>
+        </Link>
         {authenticated ? (
           <>
             <li>

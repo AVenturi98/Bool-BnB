@@ -10,7 +10,7 @@ export default function NotFound() {
                 </figure>
                 <h1 className="font-extrabold text-5xl">404</h1>
                 <span className="font-bold text-xl">Page not found!</span>
-                <Link to='/' className="text-green-600 underline">Go back to homepage</Link>
+                <Link to='/' className="text-green-600 underline hover:text-cyan-600">Go back to homepage</Link>
             </div>
         </section>
     )
