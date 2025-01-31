@@ -36,6 +36,7 @@ export default function Show() {
     const [review, setReview] = useState([]);
     const [hearts, setHearts] = useState(0);
     const [formReview, setFormReview] = useState(false); // Toggle form
+    const [isClicked, setIsClicked] = useState(false)
 
     const { setIsLoading } = useContext(GlobalContext)
 
@@ -44,6 +45,7 @@ export default function Show() {
     const sendmail = () => {
 
         setIsLoading(true)
+        setIsClicked(true)
 
         axios
             .post("http://localhost:3000/send-mail")
@@ -168,10 +170,11 @@ export default function Show() {
                         <h1 className="text-2xl font-semibold">
                             Hai bisogno di più informazioni?
                         </h1>
-                        <Button className="bg-green-600 ml-auto hover:bg-cyan-600 transition hover:-translate-y-1 hover:scale-101 delay-100" onClick={sendmail}>Sono interessato</Button>
+                        <Button disabled={isClicked} className="bg-green-600 ml-auto hover:bg-cyan-600 transition hover:-translate-y-1 hover:scale-101 delay-100 disabled:bg-gray-400 disabled:cursor-not-allowed" onClick={sendmail}>Sono interessato</Button>
                     </div>
-                    <p className="my-3 text-lg">
+                    <p className="my-3 text-lg flex items-center justify-between">
                         Mettiti in contatto con {owner.name}, il proprietario di casa
+                        {isClicked && <p className="text-green-600">Email inviata!</p>}
                     </p>
                     <div className="flex items-baseline gap-5">
                         <div className="text-lg my-3">
