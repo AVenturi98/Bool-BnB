@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import Card from '../components/Card';
 import { useEffect } from 'react';
+import { useWindowWidth } from '@/contexts/WindowContext';
 
 export default function SearchPage() {
     const [data, setData] = useState([]);
@@ -28,14 +29,18 @@ export default function SearchPage() {
     } , []);
 
     
-    
+     // Response Mobile Width
+      const { windowWidth } = useWindowWidth();
+      const mobileWidth = windowWidth >= 640
 
     return (
         <>
         <div className='container mx-auto'>
-            <div className="grid grid-cols-3 gap-3 px-6 py-12 lg:px-8 pt-[105px]">
-                <div className='mt-9 col-span-1'>
-                    <Search />
+            <div className={mobileWidth ? "grid grid-cols-3 gap-3 px-6 py-12 lg:px-8 pt-[105px]" : 'm-1'}>
+                <div className='my-9 col-span-1'>
+                <div className={mobileWidth ? "sticky top-24" : ''}>
+                        <Search />
+                    </div>
                 </div>
                 <div className='col-span-2'>
                     <h1 className="text-center text-2xl/9 font-bold tracking-tight text-gray-900">

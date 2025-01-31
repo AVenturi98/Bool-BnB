@@ -33,7 +33,7 @@ export default function Search() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 border rounded-lg shadow-md bg-green-100">
+    <div className="md:max-w-md mx-auto p-4 border rounded-lg shadow-md bg-green-100">
       <h1 className="text-2xl font-bold mb-4">Ricerca Proprietà</h1>
       <form onSubmit={handleSubmit}>
         <label className="block mb-2">
