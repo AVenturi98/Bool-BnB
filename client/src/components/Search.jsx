@@ -76,20 +76,6 @@ export default function Search() {
           Cerca
         </button>
       </form>
-
-      <h2 className="text-xl font-semibold mt-4">Risultati:</h2>
-      {errorMessage && <p className="text-red-500">{errorMessage}</p>} {/* Mostra il messaggio di errore */}
-      {data && data.length > 0 ? (
-        <ul className="mt-2">
-          {data.map((property) => (
-            <li key={property.id} className="p-2 border-b">
-              {property.title} - {property.rooms} stanze, {property.beds} letti
-            </li>
-          ))}
-        </ul>
-      ) : (
-        !errorMessage && <p className="text-gray-500">Nessun risultato trovato</p>
-      )}
     </div>
   );
 }

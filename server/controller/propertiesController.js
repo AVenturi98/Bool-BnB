@@ -11,7 +11,7 @@ function index(req, res) {
     FROM properties
     LEFT JOIN reviews ON properties.id = reviews.property_id
     GROUP BY properties.id
-    ORDER BY properties.hearts DESC
+    ORDER BY hearts DESC
   `;
   // Esegui la query
   connection.query(sql, (err, properties) => {
@@ -291,7 +291,7 @@ function getHearts(req, res) {
   });
 }
 
-
+//search
 function search(req, res) {
   const { city, rooms, beds, building_type } = req.query;
 
@@ -307,12 +307,18 @@ function search(req, res) {
   }
 
   const sql = `
-    SELECT * FROM properties 
+    SELECT properties.* ,
+    AVG(reviews.vote) AS avg_vote,
+    COUNT(reviews.id) AS review_count
+    FROM properties
+    LEFT JOIN reviews ON properties.id = reviews.property_id
     WHERE 
       (city LIKE ? OR ? IS NULL)
     AND (rooms >= ? OR ? IS NULL)
     AND (beds >= ? OR ? IS NULL)
-    AND (building_type LIKE ? OR ? IS NULL);
+    AND (building_type LIKE ? OR ? IS NULL)
+    GROUP  BY properties.id
+    ORDER by hearts DESC
   `;
 
   const values = [
@@ -330,6 +336,12 @@ function search(req, res) {
     if (results.length === 0) {
       return res.status(404).json({ message: "Proprietà non trovata" });
     }
+    // path immagine
+    results.forEach(property => {
+      if (property.img && !property.img.startsWith('http')) {
+        property.img = `${process.env.BE_HOST}/properties/${property.img}`;
+      }
+    });
 
     res.json(results);
   });

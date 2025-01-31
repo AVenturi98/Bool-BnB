@@ -30,7 +30,7 @@ export default function Card({ property }) {
           </div>
         </Link>
         <div className="absolute bottom-4 right-4">
-          <Hearts property={property} />
+          <Hearts  property={property} />
         </div>
       </div>
     </>
