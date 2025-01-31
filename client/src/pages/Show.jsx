@@ -94,7 +94,7 @@ export default function Show() {
     };
 
     const imgSrc = property.img && property.img.trim() !== '' && !property.img.endsWith('/') ? property.img : defaultImg
-    console.log('Property Image:', property.img);
+    // console.log('Property Image:', property.img);
 
     // Response Mobile Width
     const { windowWidth } = useWindowWidth();
