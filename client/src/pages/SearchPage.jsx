@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Card from '../components/Card';
-<<<<<<< HEAD
 import { useNavigate, useSearchParams } from "react-router-dom";
-=======
-import { useEffect } from 'react';
-import { useWindowWidth } from '@/contexts/WindowContext';
->>>>>>> b4f496b41c6993a95fdee5bdeadedc91be555ba9
 
 export default function SearchPage() {
     const [data, setData] = useState([]);
@@ -43,7 +38,6 @@ export default function SearchPage() {
         fetchProperties()
     }, [])
 
-<<<<<<< HEAD
     // Effettua la ricerca quando l'URL cambia
     useEffect(() => {
         const queryString = searchParams.toString();
@@ -61,16 +55,9 @@ export default function SearchPage() {
         const building_type = searchParams.get("building_type");
         urlQuery(city, beds, rooms, building_type);
     };
-=======
-    
-     // Response Mobile Width
-      const { windowWidth } = useWindowWidth();
-      const mobileWidth = windowWidth >= 640
->>>>>>> b4f496b41c6993a95fdee5bdeadedc91be555ba9
 
     return (
         <div className='container mx-auto'>
-<<<<<<< HEAD
             <div className="grid grid-cols-3 gap-3 px-6 py-12 lg:px-8 pt-[105px]">
                 <div className='mt-9 col-span-1'>
                     <div className="max-w-md mx-auto p-4 border rounded-lg shadow-md bg-green-100">
@@ -128,12 +115,6 @@ export default function SearchPage() {
                                 Cerca
                             </button>
                         </form>
-=======
-            <div className={mobileWidth ? "grid grid-cols-3 gap-3 px-6 py-12 lg:px-8 pt-[105px]" : 'm-1'}>
-                <div className='my-9 col-span-1'>
-                <div className={mobileWidth ? "sticky top-24" : ''}>
-                        <Search />
->>>>>>> b4f496b41c6993a95fdee5bdeadedc91be555ba9
                     </div>
                 </div>
                 <div className='col-span-2'>
