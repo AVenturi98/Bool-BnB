@@ -322,10 +322,6 @@ function search(req, res) {
     `%${building_type || ''}%`, building_type || null
   ];
 
-  // Log della query SQL e dei valori
-  console.log("Esecuzione della query:", sql);
-  console.log("Valori per la query:", values);
-
   connection.query(sql, values, (err, results) => {
     if (err) {
       console.error(err);
