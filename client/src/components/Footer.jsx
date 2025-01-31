@@ -24,13 +24,13 @@ export default function Footer() {
           <h3 className="text-green-800 mb-2 font-bold">Link Utili</h3>
           <ul className="list-none space-y-2">
             <li>
-              <a href="#" className="hover:text-cyan-600 transition-colors duration-300">
+              <a href="/" className="hover:text-cyan-600 transition-colors duration-300">
                 Home
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-cyan-600 transition-colors duration-300">
-                About
+              <a href="/ricerca" className="hover:text-cyan-600 transition-colors duration-300">
+                Ricerca
               </a>
             </li>
             <li>
