@@ -22,8 +22,8 @@ const transporter = nodemailer.createTransport({
   host: 'sandbox.smtp.mailtrap.io',
   port: 2525,
   auth: {
-    user: "a55510f8035557",
-    pass: "a8f15d13bfa3c6"
+    user: "4f0db643b731d3",
+    pass: "479908376414f4"
   }
 });
 
@@ -53,13 +53,13 @@ app.post('/send-mail', (req, res) => {
     port: 587,
     auth: {
       user: "api",
-      pass: "d10b3191916acc28e9db5a702bb74be1"
+      pass: "6afbfc534939434e07d0dc48c46993b0"
     }
   });
 
   const mailOptions = {
     from: '"BoolBnB"<info@demomailtrap.com>',
-    to: "domenici.simone00@gmail.com",  // Inserisci la tua mail 
+    to: "team1.boolean@gmail.com",  // Inserisci la tua mail 
     subject: "Grazie per l'interesse!",
     text: "Grazie per averci contattato, ti risponderemo al più presto!",
     html: `<h1>Grazie per averci contattato!</h1> <p>Verrai ricontattato al più presto!</p>` 
