@@ -22,13 +22,15 @@ const transporter = nodemailer.createTransport({
   host: 'sandbox.smtp.mailtrap.io',
   port: 2525,
   auth: {
-    user: "4f0db643b731d3",
-    pass: "479908376414f4"
+    user: "7c529b9f234cee",
+    pass: "4e7169ea3d8100"
   }
 });
 
 app.post('/send', (req, res) => {
   const { firstName, lastName, email, message, owner } = req.body;
+  console.log(req.body);
+  
 
   const mailOptions = {
     from: `"${firstName}" "${lastName}" <${email}>`,

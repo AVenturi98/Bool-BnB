@@ -190,7 +190,7 @@ export default function Show() {
                             </button>
                         </div>
                     </div>
-                    <MailForm />
+                    <MailForm owner={owner.owner_email} />
                 </section>
 
                 {/* REVIEWS */}
